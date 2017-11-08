@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:kindred-app.xcodeproj">
+      location = "self:/Users/kate/Desktop/berk_dev/294_084/kindred-app2/kindred-app.xcodeproj">
    </FileRef>
 </Workspace>

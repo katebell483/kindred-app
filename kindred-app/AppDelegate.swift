@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  kindred-app
+//  kindred-app2
 //
 //  Created by Katherine Bell on 11/8/17.
 //  Copyright © 2017 Katherine Bell. All rights reserved.
