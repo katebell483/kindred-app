@@ -13,6 +13,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // These strings will be the data for the table view cells
     let animals: [String] = ["Horse", "Cow", "Camel", "Sheep", "Goat"]
     
+    var students = [Student]()
+    
     // These are the colors of the square views in our table view cells.
     // In a real project you might use UIImages.
     let colors = [UIColor.blue, UIColor.yellow, UIColor.magenta, UIColor.red, UIColor.brown]
@@ -23,6 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadSampleStudents()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -34,15 +37,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:StudentCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! StudentCell
         
+        let student = students[indexPath.row]
+        
         cell.myView.backgroundColor = self.colors[indexPath.row]
-        cell.myCellLabel.text = self.animals[indexPath.row]
-        cell.deviceCount.text = self.animals[indexPath.row]
+        cell.studentName.text = student.name;
+        cell.deviceCount.text = String(student.deviceCount);
         
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return animals.count
+        return students.count
+    }
+    
+    private func loadSampleStudents() {
+        
+        guard let student1 = Student(name: "kate", deviceCount: 2) else {
+            fatalError("Unable to instantiate meal2")
+        }
+        
+        students += [student1]
     }
 
 }

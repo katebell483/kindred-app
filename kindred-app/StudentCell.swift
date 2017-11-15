@@ -10,6 +10,6 @@ import UIKit
 
 class StudentCell: UITableViewCell {
     @IBOutlet weak var myView: UIView!
-    @IBOutlet weak var myCellLabel: UILabel!
+    @IBOutlet weak var studentName: UILabel!
     @IBOutlet weak var deviceCount: UILabel!
 }

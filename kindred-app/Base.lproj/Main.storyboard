@@ -68,9 +68,9 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="deviceCount" destination="bRN-fo-QKV" id="san-cM-gKU"/>
-                                            <outlet property="myCellLabel" destination="4eC-Px-vJI" id="0yV-gl-6od"/>
-                                            <outlet property="myView" destination="QBb-uj-nVh" id="KV1-qu-vCr"/>
+                                            <outlet property="deviceCount" destination="bRN-fo-QKV" id="Nte-RV-fRV"/>
+                                            <outlet property="myView" destination="QBb-uj-nVh" id="Qcu-W8-cYj"/>
+                                            <outlet property="studentName" destination="4eC-Px-vJI" id="7CS-tv-HN9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
