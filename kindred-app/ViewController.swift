@@ -41,7 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell.myView.backgroundColor = self.colors[indexPath.row]
         cell.studentName.text = student.name;
-        cell.deviceCount.text = String(student.deviceCount);
+        cell.deviceCount.text = String(student.devices.count);
         
         return cell
     }
@@ -52,7 +52,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func loadSampleStudents() {
         
-        guard let student1 = Student(name: "kate", deviceCount: 2) else {
+        let device = Device(id: 0, studentId: 1, uuid: "111-222", label: "bathroom", message: "go to the bathroom", icon: "icon.png")
+        
+        guard let student1 = Student(name: "kate", devices: [device!]) else {
             fatalError("Unable to instantiate meal2")
         }
         

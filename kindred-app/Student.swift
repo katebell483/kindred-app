@@ -13,18 +13,18 @@ class Student {
     //MARK: Properties
     
     var name: String
-    var deviceCount: Int
+    var devices: [Device]
     
-    init?(name: String, deviceCount: Int) {
+    init?(name: String, devices: [Device]) {
 
         // Initialization should fail if there is no name or if the rating is negative.
-        if name.isEmpty || deviceCount < 0  {
+        if name.isEmpty  {
             return nil
         }
         
         // Initialize stored properties.
         self.name = name
-        self.deviceCount = deviceCount
+        self.devices = devices
     }
     
 }
