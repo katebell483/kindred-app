@@ -234,10 +234,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="113"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nue-id-9vj">
-                                                    <rect key="frame" x="20" y="20" width="85" height="73"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="msg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-L7-pR6">
+                                                    <rect key="frame" x="41" y="46" width="33" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                     </collectionViewCell>
@@ -287,6 +290,7 @@
                     </view>
                     <connections>
                         <outlet property="deviceCountLabel" destination="vNZ-jp-AFv" id="F5Q-An-8eL"/>
+                        <outlet property="studentIconView" destination="7mq-1E-3PZ" id="mPL-xM-m68"/>
                         <outlet property="studentInfo" destination="JVd-fE-CxI" id="IYL-K1-cEy"/>
                         <outlet property="studentNameLabel" destination="I52-Mj-P27" id="8Dc-86-0fc"/>
                     </connections>
