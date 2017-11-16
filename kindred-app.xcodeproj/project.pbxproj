@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4443B17E1FBE490E00B32B68 /* StudentProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */; };
 		449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B11FBCCCF800DF1A92 /* StudentCell.swift */; };
 		449118B41FBCCFF900DF1A92 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B31FBCCFF900DF1A92 /* Student.swift */; };
 		449118B61FBCD37100DF1A92 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B51FBCD37100DF1A92 /* Device.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentProfileViewController.swift; sourceTree = "<group>"; };
 		449118B11FBCCCF800DF1A92 /* StudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		449118B31FBCCFF900DF1A92 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		449118B51FBCD37100DF1A92 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				44D1F4CC1FB359B000E3C6C4 /* AppDelegate.swift */,
 				44D1F4CE1FB359B000E3C6C4 /* ViewController.swift */,
 				44D1F4D01FB359B000E3C6C4 /* Main.storyboard */,
+				4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */,
 				449118B31FBCCFF900DF1A92 /* Student.swift */,
 				449118B11FBCCCF800DF1A92 /* StudentCell.swift */,
 				44D1F4DE1FB35ABA00E3C6C4 /* AddStudentView.swift */,
@@ -153,6 +156,7 @@
 				44D1F4CD1FB359B000E3C6C4 /* AppDelegate.swift in Sources */,
 				449118B61FBCD37100DF1A92 /* Device.swift in Sources */,
 				449118B41FBCCFF900DF1A92 /* Student.swift in Sources */,
+				4443B17E1FBE490E00B32B68 /* StudentProfileViewController.swift in Sources */,
 				449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,12 +8,10 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    // These strings will be the data for the table view cells
-    let animals: [String] = ["Horse", "Cow", "Camel", "Sheep", "Goat"]
-    
-    var students = [Student]()
+
+    var studentList = [StudentInfo]()
     
     // These are the colors of the square views in our table view cells.
     // In a real project you might use UIImages.
@@ -25,7 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadSampleStudents()
+        self.loadStudentList()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -37,28 +35,75 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:StudentCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! StudentCell
         
-        let student = students[indexPath.row]
+        let student = studentList[indexPath.row]
+        
+        print(student.student_name)
         
         cell.myView.backgroundColor = self.colors[indexPath.row]
-        cell.studentName.text = student.name;
-        cell.deviceCount.text = String(student.devices.count);
+        cell.studentName.text = student.student_name;
+        cell.deviceCount.text = String(student.device_count);
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell:StudentCell = tableView.cellForRow(at: indexPath) as! StudentCell;
+        let name:String = cell.studentName.text!
+        let deviceNumber:String = cell.deviceCount.text!;
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        let studentProfileView = self.storyboard?.instantiateViewController(withIdentifier: "Profile") as! StudentProfileViewController
+        
+        studentProfileView.studentName = name
+        studentProfileView.deviceCount = deviceNumber
+
+        self.present(studentProfileView, animated: true, completion: nil)
     }
     
-    private func loadSampleStudents() {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(studentList.count)
+        return studentList.count
+    }
+
+    struct StudentInfo: Codable {
+        let student_name: String
+        let device_count: Int
+    }
+
+    private func loadStudentList() {
         
-        let device = Device(id: 0, studentId: 1, uuid: "111-222", label: "bathroom", message: "go to the bathroom", icon: "icon.png")
+        //Implementing URLSession
+        let urlString = "http://127.0.0.1:5000/studentList"
+        guard let url = URL(string: urlString) else { return }
         
-        guard let student1 = Student(name: "kate", devices: [device!]) else {
-            fatalError("Unable to instantiate meal2")
-        }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            
+            guard let data = data else { return }
+            
+            //Implement JSON decoding and parsing
+            do {
+                
+                //Decode retrived data with JSONDecoder and assing type of Article object
+                let studentData = try JSONDecoder().decode([StudentInfo].self, from: data)
+                print(studentData)
+                
+                //Get back to the main queue
+                DispatchQueue.main.async {
+                    self.studentList = studentData
+                    self.tableView.reloadData()
+                }
+                
+            } catch let jsonError {
+                print(jsonError)
+            }
+            
+            }.resume()
         
-        students += [student1]
+        
+        //End implementing URLSession
+        
     }
 
 }
