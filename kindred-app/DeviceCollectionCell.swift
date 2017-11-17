@@ -10,5 +10,6 @@ import UIKit
 
 class DeviceCollectionCell: UICollectionViewCell {
     @IBOutlet weak var deviceMsg: UILabel!
+    @IBOutlet weak var deviceIcon: UIView!
 }
 

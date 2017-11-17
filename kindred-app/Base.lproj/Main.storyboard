@@ -24,7 +24,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="80"/>
                                 <state key="normal" title="+"/>
                                 <connections>
-                                    <segue destination="gop-xe-QP5" kind="show" id="qiE-al-gu8"/>
+                                    <segue destination="Kdn-7n-KMv" kind="show" id="uHw-Lb-Uz9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="kindred" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEV-FM-GH2">
@@ -194,15 +194,15 @@
                                 <rect key="frame" x="16" y="72" width="343" height="87"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="student nam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I52-Mj-P27">
-                                        <rect key="frame" x="119" y="17" width="96" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="student name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I52-Mj-P27">
+                                        <rect key="frame" x="119" y="17" width="106" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="device connected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNZ-jp-AFv">
-                                        <rect key="frame" x="119" y="46" width="137" height="21"/>
+                                        <rect key="frame" x="119" y="46" width="196" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -213,6 +213,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Student Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d1P-T7-ubi">
+                                        <rect key="frame" x="119" y="12" width="181" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -234,16 +241,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="113"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="msg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-L7-pR6">
-                                                    <rect key="frame" x="41" y="46" width="33" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="msg" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-L7-pR6">
+                                                    <rect key="frame" x="10" y="80" width="105" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YBY-kG-jBI">
+                                                    <rect key="frame" x="32" y="11" width="60" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <connections>
+                                            <outlet property="deviceIcon" destination="YBY-kG-jBI" id="Fnf-kZ-eeZ"/>
                                             <outlet property="deviceMsg" destination="4yJ-L7-pR6" id="ptv-CJ-rqb"/>
                                         </connections>
                                     </collectionViewCell>
@@ -296,16 +309,18 @@
                         <viewLayoutGuide key="safeArea" id="cBI-DA-5G1"/>
                     </view>
                     <connections>
+                        <outlet property="addDeviceView" destination="3Gy-vn-kqM" id="QWk-Cg-SVk"/>
                         <outlet property="collectionView" destination="JMR-5l-7t1" id="mvP-Ux-GYz"/>
                         <outlet property="deviceCountLabel" destination="vNZ-jp-AFv" id="F5Q-An-8eL"/>
                         <outlet property="studentIconView" destination="7mq-1E-3PZ" id="mPL-xM-m68"/>
                         <outlet property="studentInfo" destination="JVd-fE-CxI" id="IYL-K1-cEy"/>
                         <outlet property="studentNameLabel" destination="I52-Mj-P27" id="8Dc-86-0fc"/>
+                        <outlet property="studentNameTextInput" destination="d1P-T7-ubi" id="8z1-gk-0Qu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPh-hi-4tO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="910" y="606"/>
+            <point key="canvasLocation" x="909.60000000000002" y="605.84707646176912"/>
         </scene>
     </scenes>
 </document>

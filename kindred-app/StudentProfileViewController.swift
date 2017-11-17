@@ -14,9 +14,13 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBOutlet weak var studentNameLabel: UILabel!
     @IBOutlet weak var deviceCountLabel: UILabel!
+    @IBOutlet weak var studentNameTextInput: UITextField!
+    
     @IBOutlet weak var studentIconView: UIView!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var addDeviceView: UIView!
     
     let cellReuseIdentifier = "DeviceCell"
 
@@ -27,8 +31,22 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        studentNameLabel.text = self.studentName
-        deviceCountLabel.text = self.deviceCount
+        
+        // hide the add device view on default
+        addDeviceView.isHidden = true
+        
+        // is this a new student?
+        if(self.studentName.isEmpty) {
+            studentNameTextInput.isHidden = false
+            studentNameLabel.isHidden = true
+            self.deviceCount = "0"
+        } else {
+            studentNameTextInput.isHidden = true
+            studentNameLabel.isHidden = false
+            studentNameLabel.text = self.studentName
+        }
+
+        deviceCountLabel.text = self.deviceCount + " devices connected"
         studentIconView.backgroundColor = UIColor.blue
 
         print(self.studentName)
@@ -56,6 +74,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
         let device = deviceList[indexPath.row]
         
+        cell.deviceIcon.backgroundColor = UIColor.green
         cell.deviceMsg.text = device.device_msg
 
         return cell
