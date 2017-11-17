@@ -20,14 +20,23 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var addDeviceCollectionCell: UICollectionViewCell!
     @IBOutlet weak var addDeviceView: UIView!
     
+
     let cellReuseIdentifier = "DeviceCell"
+    let deviceAddCellIdentifier = "DeviceAddCell"
 
     var studentName:String = "";
     var deviceCount:String = "";
     
     var deviceList = [Device]()
+    
+    // send the post request
+    @IBAction func addDeviceButton(_ sender: Any) {
+        // send post request
+        addDevice()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,23 +72,36 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     }
  
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return deviceList.count
+        return deviceList.count + 1
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if(indexPath.row == deviceList.count) {
+            let cell:DeviceAddCollectionCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: deviceAddCellIdentifier, for: indexPath as IndexPath) as! DeviceAddCollectionCell
+            return cell
+        }
         
         let cell:DeviceCollectionCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath as IndexPath) as! DeviceCollectionCell
-        
+            
         let device = deviceList[indexPath.row]
-        
+            
         cell.deviceIcon.backgroundColor = UIColor.green
-        cell.deviceMsg.text = device.device_msg
-
+        cell.deviceLabel.text = device.device_label
         return cell
+        
     }
 
+    // detect touch of addition
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == deviceList.count {
+            addDeviceView.isHidden = false
+        } else {
+            print("handle the other buttons")
+        }
+    }
+    
     
     struct Device: Codable {
         let device_uuid: String
@@ -124,6 +146,19 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         //End implementing URLSession
         
     }
+    
+    func addDevice() {
+        // send post request
+        
+        // if successful then add device to list and update the collection view
+        let newDevice = Device(device_uuid: "212323-123", device_msg: "Bathroom npw", device_label: "bathroom", device_icon: "icon.png")
+
+        self.deviceList.append(newDevice)
+        
+        self.collectionView.reloadData()
+        addDeviceView.isHidden = true
+    }
+
 
     /*
     // MARK: - Navigation

@@ -11,28 +11,24 @@ import UIKit
 class Device {
     
     //MARK: Properties
+    var device_uuid: String
+    var device_msg: String
+    var device_label: String
+    var device_icon: String
     
-    var id: Int
-    var studentId: Int
-    var uuid: String
-    var label: String
-    var message: String
-    var icon: String
-    
-    init?(id: Int, studentId: Int, uuid: String, label: String, message: String, icon: String) {
+    init?(device_uuid: String, device_msg: String, device_label: String, device_icon: String) {
         
         // Initialization should fail if there is no name or if the rating is negative.
-        if id < 0 || studentId < 0 || uuid.isEmpty || uuid.isEmpty || label.isEmpty || message.isEmpty || icon.isEmpty {
+        if device_uuid.isEmpty || device_msg.isEmpty || device_label.isEmpty || device_icon.isEmpty {
             return nil
         }
         
         // Initialize stored properties.
-        self.id = id
-        self.studentId = studentId
-        self.uuid = uuid
-        self.label = label
-        self.message = message
-        self.icon = icon
+        self.device_uuid = device_uuid
+        self.device_msg = device_msg
+        self.device_label = device_label
+        self.device_icon = device_icon
+
     }
     
 }

@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var studentList = [StudentInfo]()
@@ -33,6 +32,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell:StudentCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! StudentCell
         
         let student = studentList[indexPath.row]
@@ -60,7 +60,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(studentList.count)
         return studentList.count
     }
 
