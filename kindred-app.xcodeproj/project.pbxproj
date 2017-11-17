@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4443B17E1FBE490E00B32B68 /* StudentProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */; };
+		4443B1801FBE53C300B32B68 /* DeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */; };
 		449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B11FBCCCF800DF1A92 /* StudentCell.swift */; };
 		449118B41FBCCFF900DF1A92 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B31FBCCFF900DF1A92 /* Student.swift */; };
 		449118B61FBCD37100DF1A92 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B51FBCD37100DF1A92 /* Device.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentProfileViewController.swift; sourceTree = "<group>"; };
+		4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCollectionCell.swift; sourceTree = "<group>"; };
 		449118B11FBCCCF800DF1A92 /* StudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		449118B31FBCCFF900DF1A92 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		449118B51FBCD37100DF1A92 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */,
 				449118B31FBCCFF900DF1A92 /* Student.swift */,
 				449118B11FBCCCF800DF1A92 /* StudentCell.swift */,
+				4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */,
 				44D1F4DE1FB35ABA00E3C6C4 /* AddStudentView.swift */,
 				44D1F4D31FB359B000E3C6C4 /* Assets.xcassets */,
 				44D1F4D51FB359B000E3C6C4 /* LaunchScreen.storyboard */,
@@ -152,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44D1F4CF1FB359B000E3C6C4 /* ViewController.swift in Sources */,
+				4443B1801FBE53C300B32B68 /* DeviceCollectionCell.swift in Sources */,
 				44D1F4DF1FB35ABA00E3C6C4 /* AddStudentView.swift in Sources */,
 				44D1F4CD1FB359B000E3C6C4 /* AppDelegate.swift in Sources */,
 				449118B61FBCD37100DF1A92 /* Device.swift in Sources */,

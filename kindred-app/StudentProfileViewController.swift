@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StudentProfileViewController: UIViewController {
+class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var studentInfo: UIView!
     
@@ -16,6 +16,10 @@ class StudentProfileViewController: UIViewController {
     @IBOutlet weak var deviceCountLabel: UILabel!
     @IBOutlet weak var studentIconView: UIView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    let cellReuseIdentifier = "DeviceCell"
+
     var studentName:String = "";
     var deviceCount:String = "";
     
@@ -39,6 +43,25 @@ class StudentProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+ 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return deviceList.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        
+        let cell:DeviceCollectionCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath as IndexPath) as! DeviceCollectionCell
+        
+        let device = deviceList[indexPath.row]
+        
+        cell.deviceMsg.text = device.device_msg
+
+        return cell
+    }
+
+    
     struct Device: Codable {
         let device_uuid: String
         let device_msg: String
@@ -69,7 +92,7 @@ class StudentProfileViewController: UIViewController {
                 //Get back to the main queue
                 DispatchQueue.main.async {
                     self.deviceList = deviceData
-                    //self.tableView.reloadData()
+                    self.collectionView.reloadData()
                 }
                 
             } catch let jsonError {

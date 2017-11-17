@@ -227,7 +227,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="5tq-gG-HLr">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceCell" id="5tq-gG-HLr" customClass="DeviceCollectionCell" customModule="kindred_app2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="113"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -243,8 +243,15 @@
                                                 </label>
                                             </subviews>
                                         </view>
+                                        <connections>
+                                            <outlet property="deviceMsg" destination="4yJ-L7-pR6" id="ptv-CJ-rqb"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kdn-7n-KMv" id="wQn-6F-sQn"/>
+                                    <outlet property="delegate" destination="Kdn-7n-KMv" id="a9R-Hh-5P2"/>
+                                </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Gy-vn-kqM">
                                 <rect key="frame" x="16" y="437" width="343" height="188"/>
@@ -289,6 +296,7 @@
                         <viewLayoutGuide key="safeArea" id="cBI-DA-5G1"/>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="JMR-5l-7t1" id="mvP-Ux-GYz"/>
                         <outlet property="deviceCountLabel" destination="vNZ-jp-AFv" id="F5Q-An-8eL"/>
                         <outlet property="studentIconView" destination="7mq-1E-3PZ" id="mPL-xM-m68"/>
                         <outlet property="studentInfo" destination="JVd-fE-CxI" id="IYL-K1-cEy"/>
