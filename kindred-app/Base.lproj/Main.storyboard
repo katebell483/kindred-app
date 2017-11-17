@@ -234,7 +234,7 @@
                                         <state key="normal" title="icon"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJW-tJ-6Mx">
-                                        <rect key="frame" x="18" y="143" width="76" height="30"/>
+                                        <rect key="frame" x="18" y="143" width="207" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="add device"/>
                                         <connections>
@@ -249,6 +249,10 @@
                         <viewLayoutGuide key="safeArea" id="cBI-DA-5G1"/>
                     </view>
                     <connections>
+                        <outlet property="addDeviceButton" destination="XJW-tJ-6Mx" id="TpS-zj-YaM"/>
+                        <outlet property="addDeviceLabel" destination="oRA-Uv-hyu" id="ykn-Ya-GTu"/>
+                        <outlet property="addDeviceMessage" destination="RvC-ey-c3r" id="z8g-SI-IqH"/>
+                        <outlet property="addDeviceUUID" destination="NP2-m8-yR5" id="Jot-J9-Izl"/>
                         <outlet property="addDeviceView" destination="3Gy-vn-kqM" id="QWk-Cg-SVk"/>
                         <outlet property="collectionView" destination="JMR-5l-7t1" id="mvP-Ux-GYz"/>
                         <outlet property="deviceCountLabel" destination="vNZ-jp-AFv" id="F5Q-An-8eL"/>

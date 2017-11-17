@@ -10,20 +10,24 @@ import UIKit
 
 class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    // STUDENT INFO: TOP SECTION VIEW
     @IBOutlet weak var studentInfo: UIView!
-    
     @IBOutlet weak var studentNameLabel: UILabel!
     @IBOutlet weak var deviceCountLabel: UILabel!
     @IBOutlet weak var studentNameTextInput: UITextField!
-    
     @IBOutlet weak var studentIconView: UIView!
     
+    // COLLECTION OF DEVICE VIEW
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var addDeviceCollectionCell: UICollectionViewCell!
-    @IBOutlet weak var addDeviceView: UIView!
     
-
+    // ADD DEVICE VIEW
+    @IBOutlet weak var addDeviceView: UIView!
+    @IBOutlet weak var addDeviceLabel: UITextField!
+    @IBOutlet weak var addDeviceMessage: UITextField!
+    @IBOutlet weak var addDeviceUUID: UITextField!
+    @IBOutlet weak var addDeviceButton: UIButton!
+    
     let cellReuseIdentifier = "DeviceCell"
     let deviceAddCellIdentifier = "DeviceAddCell"
 
@@ -96,9 +100,15 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     // detect touch of addition
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == deviceList.count {
+            addDeviceButton.setTitle("add device", for: .normal)
             addDeviceView.isHidden = false
         } else {
-            print("handle the other buttons")
+            let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
+
+            addDeviceButton.setTitle("update device", for: .normal)
+            // TODO: hook up the other cells and learn to store data behind scenes
+            addDeviceLabel.text = cell.deviceLabel.text;
+            addDeviceView.isHidden = false
         }
     }
     
