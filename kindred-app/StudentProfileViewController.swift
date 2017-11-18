@@ -18,7 +18,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var studentIconView: UIView!
     
     // COLLECTION OF DEVICE VIEW
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var deviceCollectionView: UICollectionView!
     @IBOutlet weak var addDeviceCollectionCell: UICollectionViewCell!
     
     // ADD DEVICE VIEW
@@ -27,19 +27,40 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceMessage: UITextField!
     @IBOutlet weak var addDeviceUUID: UITextField!
     @IBOutlet weak var addDeviceButton: UIButton!
-    
     @IBOutlet weak var addDeviceIconButton: UIButton!
     
+    // ICON VIEW
+    @IBOutlet weak var iconView: UICollectionView!
+    var icons = [UIImage(named:"airplane")!,
+                UIImage(named:"toilet-paper")!,
+                UIImage(named:"water")!,
+                UIImage(named:"leaf")!,
+                UIImage(named:"lily-1")!,
+                UIImage(named:"alarm-clock")!,
+                UIImage(named: "breakfast")!,
+                UIImage(named: "dinner")!,
+                UIImage(named: "improvement")!,
+                UIImage(named: "list")!,
+                UIImage(named: "cosmetics")!,
+                UIImage(named:"customer-problem")!]
+    
     @IBAction func changeIcon(_ sender: Any) {
-        let iconView = self.storyboard?.instantiateViewController(withIdentifier: "icons") as! IconCollectionViewController
-        self.present(iconView, animated: true, completion: nil)
+        studentInfo.isHidden = true
+        addDeviceView.isHidden = true
+        deviceCollectionView.isHidden = true
+        iconView.isHidden = false
+        //let iconView = self.storyboard?.instantiateViewController(withIdentifier: "icons") as! IconCollectionViewController
+        //self.present(iconView, animated: true, completion: nil)
     }
     
     let cellReuseIdentifier = "DeviceCell"
     let deviceAddCellIdentifier = "DeviceAddCell"
+    let iconReuseIdentifier = "IconCell"
 
     var studentName:String = "";
     var deviceCount:String = "";
+    var keepAddDeviceOpen:Bool = false;
+    var currDevice:Device? = nil;
     
     var deviceList = [Device]()
     
@@ -53,6 +74,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLoad()
         
         // hide the add device view on default
+        iconView.isHidden = true
         addDeviceView.isHidden = true
         
         // is this a new student?
@@ -83,61 +105,76 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     }
  
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return deviceList.count + 1
+        if collectionView == deviceCollectionView {
+            return deviceList.count + 1
+        } else {
+            return icons.count
+        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if(indexPath.row == deviceList.count) {
-            let cell:DeviceAddCollectionCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: deviceAddCellIdentifier, for: indexPath as IndexPath) as! DeviceAddCollectionCell
+        if collectionView == deviceCollectionView {
+        
+            if(indexPath.row == deviceList.count) {
+                let cell:DeviceAddCollectionCell = self.deviceCollectionView.dequeueReusableCell(withReuseIdentifier: deviceAddCellIdentifier, for: indexPath as IndexPath) as! DeviceAddCollectionCell
+                return cell
+            }
+            
+            let cell:DeviceCollectionCell = self.deviceCollectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath as IndexPath) as! DeviceCollectionCell
+            
+            let device = deviceList[indexPath.row]
+            
+            let icon: UIImage = UIImage(named: device.device_icon)!
+            cell.deviceIcon.image = icon
+            cell.deviceLabel.text = device.device_label
+            cell.deviceUUID.text = device.device_uuid
+            cell.deviceMsg.text = device.device_msg
+            
+            return cell
+        } else {
+            let cell:IconCollectionCell = iconView.dequeueReusableCell(withReuseIdentifier: iconReuseIdentifier, for: indexPath as IndexPath) as! IconCollectionCell
+            
+            cell.iconImage.image = icons[indexPath.row]
+            
             return cell
         }
-        
-        let cell:DeviceCollectionCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath as IndexPath) as! DeviceCollectionCell
-            
-        let device = deviceList[indexPath.row]
-            
-        let icon: UIImage = UIImage(named: device.device_icon)!
-        cell.deviceIcon.image = icon
-        cell.deviceLabel.text = device.device_label
-        cell.deviceUUID.text = device.device_uuid
-        cell.deviceMsg.text = device.device_msg
-        
-        return cell
         
     }
 
     // detect touch of addition
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == deviceList.count {
-            addDeviceButton.setTitle("add device", for: .normal)
-            addDeviceIconButton.setImage(nil, for: .normal);
-            addDeviceLabel.text = nil;
-            addDeviceMessage.text = nil;
-            addDeviceUUID.text = nil;
-            addDeviceView.isHidden = false
-        } else {
-            let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
+        
+        if collectionView == deviceCollectionView {
+            if indexPath.row == deviceList.count {
+                addDeviceButton.setTitle("add device", for: .normal)
+                addDeviceIconButton.setImage(nil, for: .normal);
+                addDeviceLabel.text = nil;
+                addDeviceMessage.text = nil;
+                addDeviceUUID.text = nil;
+                addDeviceView.isHidden = false
+            } else {
+                let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
 
-            addDeviceButton.setTitle("update device", for: .normal)
-            // TODO: hook up the other cells and learn to store data behind scenes
-            addDeviceLabel.text = cell.deviceLabel.text;
-            addDeviceMessage.text = cell.deviceLabel.text;
-            addDeviceUUID.text = cell.deviceUUID.text;
-            addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
-            
+                addDeviceButton.setTitle("update device", for: .normal)
+                // TODO: hook up the other cells and learn to store data behind scenes
+                addDeviceLabel.text = cell.deviceLabel.text;
+                addDeviceMessage.text = cell.deviceLabel.text;
+                addDeviceUUID.text = cell.deviceUUID.text;
+                addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
+                
+                addDeviceView.isHidden = false
+            }
+        } else {
+            let cell:IconCollectionCell = collectionView.cellForItem(at: indexPath) as! IconCollectionCell;
+            addDeviceIconButton.setImage(cell.iconImage.image, for: .normal);
+            studentInfo.isHidden = false
             addDeviceView.isHidden = false
+            deviceCollectionView.isHidden = false
+            iconView.isHidden = true
         }
-    }
-    
-    
-    
-    struct Device: Codable {
-        let device_uuid: String
-        let device_msg: String
-        let device_label: String
-        let device_icon: String
+        
     }
     
     private func loadDevices() {
@@ -163,7 +200,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 //Get back to the main queue
                 DispatchQueue.main.async {
                     self.deviceList = deviceData
-                    self.collectionView.reloadData()
+                    self.deviceCollectionView.reloadData()
                 }
                 
             } catch let jsonError {
@@ -181,11 +218,40 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         // send post request
         
         // if successful then add device to list and update the collection view
-        let newDevice = Device(device_uuid: "212323-123", device_msg: "Bathroom npw", device_label: "bathroom", device_icon: "icon.png")
 
+        
+        //Implementing URLSession
+        let urlString = "http://127.0.0.1:5000/device"
+        guard let url = URL(string: urlString) else { return }
+        
+        let postData: [String: String] = [
+            "student_name": self.studentName,
+            "device_uuid": addDeviceUUID.text!,
+            "device_label": addDeviceLabel.text!,
+            "device_msg": addDeviceMessage.text!,
+            "device_icon": "airplane" //TODO: FIX THIS
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: postData, options: [])
+        
+        var request = URLRequest(url: url)
+        request.httpBody = jsonData
+        request.httpMethod = "POST"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                // TODO something on error
+            }
+            
+            }.resume()
+        
+        // TODO: make real
+        let newDevice = Device(device_uuid: "212323-123", device_msg: "Bathroom npw", device_label: "bathroom", device_icon: "airplane")
+        
         self.deviceList.append(newDevice)
         
-        self.collectionView.reloadData()
+        self.deviceCollectionView.reloadData()
         addDeviceView.isHidden = true
     }
 

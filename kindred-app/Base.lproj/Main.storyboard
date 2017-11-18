@@ -91,49 +91,6 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--Icon Collection View Controller-->
-        <scene sceneID="dMi-Bv-Gjt">
-            <objects>
-                <collectionViewController storyboardIdentifier="icons" id="cBj-2X-Akb" customClass="IconCollectionViewController" customModule="kindred_app2" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ofx-sB-O2k">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Lf3-wq-WJS">
-                            <size key="itemSize" width="132" height="120"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="IconCell" id="XpS-Bi-Vhr" customClass="IconCollectionCell" customModule="kindred_app2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="132" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="132" height="120"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fu1-8i-F8F">
-                                            <rect key="frame" x="11" y="0.0" width="121" height="120"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                    </subviews>
-                                </view>
-                                <connections>
-                                    <outlet property="iconImage" destination="fu1-8i-F8F" id="czc-Pp-NPg"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="cBj-2X-Akb" id="1zl-wI-0bx"/>
-                            <outlet property="delegate" destination="cBj-2X-Akb" id="QYm-Ik-Mxi"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RQh-21-B4k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="872.79999999999995" y="-72.413793103448285"/>
-        </scene>
         <!--Student Profile View Controller-->
         <scene sceneID="sRE-g0-t2c">
             <objects>
@@ -142,6 +99,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KvL-b1-qlc">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9wP-bd-f84">
+                                    <size key="itemSize" width="122" height="125"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="IconCell" id="cCz-BC-hGt" customClass="IconCollectionCell" customModule="kindred_app2" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="122" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="122" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dum-w2-1QX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="122" height="125"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="iconImage" destination="Dum-w2-1QX" id="b94-0h-OVd"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kdn-7n-KMv" id="nvR-sL-9bU"/>
+                                    <outlet property="delegate" destination="Kdn-7n-KMv" id="4l6-P4-XzM"/>
+                                </connections>
+                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCq-ts-pDr">
                                 <rect key="frame" x="22" y="20" width="34" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -316,8 +307,9 @@
                         <outlet property="addDeviceMessage" destination="RvC-ey-c3r" id="z8g-SI-IqH"/>
                         <outlet property="addDeviceUUID" destination="NP2-m8-yR5" id="Jot-J9-Izl"/>
                         <outlet property="addDeviceView" destination="3Gy-vn-kqM" id="QWk-Cg-SVk"/>
-                        <outlet property="collectionView" destination="JMR-5l-7t1" id="mvP-Ux-GYz"/>
+                        <outlet property="deviceCollectionView" destination="JMR-5l-7t1" id="Wfl-Tm-ZZ2"/>
                         <outlet property="deviceCountLabel" destination="vNZ-jp-AFv" id="F5Q-An-8eL"/>
+                        <outlet property="iconView" destination="KvL-b1-qlc" id="boh-3T-NDa"/>
                         <outlet property="studentIconView" destination="7mq-1E-3PZ" id="mPL-xM-m68"/>
                         <outlet property="studentInfo" destination="JVd-fE-CxI" id="IYL-K1-cEy"/>
                         <outlet property="studentNameLabel" destination="I52-Mj-P27" id="8Dc-86-0fc"/>
