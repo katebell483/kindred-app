@@ -13,5 +13,6 @@ class DeviceCollectionCell: UICollectionViewCell {
     @IBOutlet weak var deviceUUID: UILabel!
     @IBOutlet weak var deviceMsg: UILabel!
     @IBOutlet weak var deviceIcon: UIImageView!
+    @IBOutlet weak var deviceIconLabel: UILabel!
 }
 

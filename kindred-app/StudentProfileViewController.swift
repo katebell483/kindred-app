@@ -28,6 +28,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceUUID: UITextField!
     @IBOutlet weak var addDeviceButton: UIButton!
     @IBOutlet weak var addDeviceIconButton: UIButton!
+    @IBOutlet weak var addDeviceIconLabel: UILabel!
     
     // ICON VIEW
     @IBOutlet weak var iconView: UICollectionView!
@@ -43,6 +44,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 UIImage(named: "list")!,
                 UIImage(named: "cosmetics")!,
                 UIImage(named:"customer-problem")!]
+    
+    var iconLabels = ["airplane", "toilet-paper", "water", "leaf","lily-1","alarm-clock","breakfast","dinner","improvement","list","cosmetics","customer-problem"]
     
     @IBAction func changeIcon(_ sender: Any) {
         studentInfo.isHidden = true
@@ -131,11 +134,13 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             cell.deviceLabel.text = device.device_label
             cell.deviceUUID.text = device.device_uuid
             cell.deviceMsg.text = device.device_msg
+            cell.deviceIconLabel.text = device.device_icon
             
             return cell
         } else {
             let cell:IconCollectionCell = iconView.dequeueReusableCell(withReuseIdentifier: iconReuseIdentifier, for: indexPath as IndexPath) as! IconCollectionCell
             
+            cell.iconLabel.text = iconLabels[indexPath.row]
             cell.iconImage.image = icons[indexPath.row]
             
             return cell
@@ -153,6 +158,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 addDeviceLabel.text = nil;
                 addDeviceMessage.text = nil;
                 addDeviceUUID.text = nil;
+                addDeviceIconLabel.text = nil;
                 addDeviceView.isHidden = false
             } else {
                 let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
@@ -162,6 +168,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 addDeviceLabel.text = cell.deviceLabel.text;
                 addDeviceMessage.text = cell.deviceLabel.text;
                 addDeviceUUID.text = cell.deviceUUID.text;
+                addDeviceIconLabel.text = cell.deviceIconLabel.text;
                 addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
                 
                 addDeviceView.isHidden = false
@@ -169,6 +176,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         } else {
             let cell:IconCollectionCell = collectionView.cellForItem(at: indexPath) as! IconCollectionCell;
             addDeviceIconButton.setImage(cell.iconImage.image, for: .normal);
+            addDeviceIconLabel.text = cell.iconLabel.text
             studentInfo.isHidden = false
             addDeviceView.isHidden = false
             deviceCollectionView.isHidden = false
@@ -229,12 +237,10 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             "device_uuid": addDeviceUUID.text!,
             "device_label": addDeviceLabel.text!,
             "device_msg": addDeviceMessage.text!,
-            "device_icon": "airplane" //TODO: FIX THIS
+            "device_icon": addDeviceIconLabel.text!
         ]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: postData, options: .prettyPrinted)
-
-        print(jsonData)
         
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -255,7 +261,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             }.resume()
         
         // TODO: make real
-        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: "airplane")
+        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!)
         
         self.deviceList.append(newDevice)
         
