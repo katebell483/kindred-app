@@ -28,6 +28,13 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceUUID: UITextField!
     @IBOutlet weak var addDeviceButton: UIButton!
     
+    @IBOutlet weak var addDeviceIconButton: UIButton!
+    
+    @IBAction func changeIcon(_ sender: Any) {
+        let iconView = self.storyboard?.instantiateViewController(withIdentifier: "icons") as! IconCollectionViewController
+        self.present(iconView, animated: true, completion: nil)
+    }
+    
     let cellReuseIdentifier = "DeviceCell"
     let deviceAddCellIdentifier = "DeviceAddCell"
 
@@ -91,8 +98,12 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             
         let device = deviceList[indexPath.row]
             
-        cell.deviceIcon.backgroundColor = UIColor.green
+        let icon: UIImage = UIImage(named: device.device_icon)!
+        cell.deviceIcon.image = icon
         cell.deviceLabel.text = device.device_label
+        cell.deviceUUID.text = device.device_uuid
+        cell.deviceMsg.text = device.device_msg
+        
         return cell
         
     }
@@ -101,6 +112,10 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == deviceList.count {
             addDeviceButton.setTitle("add device", for: .normal)
+            addDeviceIconButton.setImage(nil, for: .normal);
+            addDeviceLabel.text = nil;
+            addDeviceMessage.text = nil;
+            addDeviceUUID.text = nil;
             addDeviceView.isHidden = false
         } else {
             let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
@@ -108,9 +123,14 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             addDeviceButton.setTitle("update device", for: .normal)
             // TODO: hook up the other cells and learn to store data behind scenes
             addDeviceLabel.text = cell.deviceLabel.text;
+            addDeviceMessage.text = cell.deviceLabel.text;
+            addDeviceUUID.text = cell.deviceUUID.text;
+            addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
+            
             addDeviceView.isHidden = false
         }
     }
+    
     
     
     struct Device: Codable {

@@ -10,6 +10,8 @@ import UIKit
 
 class DeviceCollectionCell: UICollectionViewCell {
     @IBOutlet weak var deviceLabel: UILabel!
-    @IBOutlet weak var deviceIcon: UIView!
+    @IBOutlet weak var deviceUUID: UILabel!
+    @IBOutlet weak var deviceMsg: UILabel!
+    @IBOutlet weak var deviceIcon: UIImageView!
 }
 
