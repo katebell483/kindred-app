@@ -232,22 +232,30 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             "device_icon": "airplane" //TODO: FIX THIS
         ]
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: postData, options: [])
+        let jsonData = try? JSONSerialization.data(withJSONObject: postData, options: .prettyPrinted)
+
+        print(jsonData)
         
         var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
         request.httpMethod = "POST"
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
+                print("UH PH")
                 print(error!.localizedDescription)
                 // TODO something on error
             }
             
+            guard let data = data else { return }
+
+            print("SDFDFDF")
+            
             }.resume()
         
         // TODO: make real
-        let newDevice = Device(device_uuid: "212323-123", device_msg: "Bathroom npw", device_label: "bathroom", device_icon: "airplane")
+        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: "airplane")
         
         self.deviceList.append(newDevice)
         
