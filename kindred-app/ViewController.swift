@@ -39,7 +39,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         print(student.student_name)
         
-        cell.myView.backgroundColor = self.colors[indexPath.row]
+        var colorIndex:Int = 0;
+        if indexPath.row < self.colors.count {
+            colorIndex = indexPath.row
+        } else {
+            colorIndex = indexPath.row % self.colors.count
+        }
+        
+        cell.myView.backgroundColor = self.colors[colorIndex]
         cell.studentName.text = student.student_name;
         cell.deviceCount.text = String(student.device_count);
         

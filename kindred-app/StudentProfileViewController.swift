@@ -17,6 +17,15 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var studentNameTextInput: UITextField!
     @IBOutlet weak var studentIconView: UIView!
     
+    // student enter
+    @IBAction func newStudentNameEntered(_ sender: Any) {
+        print("NAME ENTERED")
+        self.studentName = studentNameTextInput.text!
+        studentNameTextInput.isHidden = true
+        studentNameLabel.text = self.studentName
+        studentNameLabel.isHidden = false
+    }
+    
     // COLLECTION OF DEVICE VIEW
     @IBOutlet weak var deviceCollectionView: UICollectionView!
     @IBOutlet weak var addDeviceCollectionCell: UICollectionViewCell!
@@ -29,6 +38,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceButton: UIButton!
     @IBOutlet weak var addDeviceIconButton: UIButton!
     @IBOutlet weak var addDeviceIconLabel: UILabel!
+    @IBOutlet weak var deleteDeviceButton: UIButton!
     
     // ICON VIEW
     @IBOutlet weak var iconView: UICollectionView!
@@ -52,8 +62,6 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         addDeviceView.isHidden = true
         deviceCollectionView.isHidden = true
         iconView.isHidden = false
-        //let iconView = self.storyboard?.instantiateViewController(withIdentifier: "icons") as! IconCollectionViewController
-        //self.present(iconView, animated: true, completion: nil)
     }
     
     let cellReuseIdentifier = "DeviceCell"
@@ -71,6 +79,11 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBAction func addDeviceButton(_ sender: Any) {
         // send post request
         addDevice()
+    }
+    
+    // send the delete request
+    @IBAction func deleteDeviceButton(_ sender: Any) {
+        deleteDevice()
     }
     
     override func viewDidLoad() {
@@ -154,6 +167,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         if collectionView == deviceCollectionView {
             if indexPath.row == deviceList.count {
                 addDeviceButton.setTitle("add device", for: .normal)
+                deleteDeviceButton.isHidden = true;
                 addDeviceIconButton.setImage(nil, for: .normal);
                 addDeviceLabel.text = nil;
                 addDeviceMessage.text = nil;
@@ -164,7 +178,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
 
                 addDeviceButton.setTitle("update device", for: .normal)
-                // TODO: hook up the other cells and learn to store data behind scenes
+                deleteDeviceButton.isHidden = false;
                 addDeviceLabel.text = cell.deviceLabel.text;
                 addDeviceMessage.text = cell.deviceLabel.text;
                 addDeviceUUID.text = cell.deviceUUID.text;
@@ -223,17 +237,12 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func addDevice() {
-        // send post request
-        
-        // if successful then add device to list and update the collection view
-
-        
         //Implementing URLSession
         let urlString = "http://127.0.0.1:5000/device"
         guard let url = URL(string: urlString) else { return }
         
         let postData: [String: String] = [
-            "student_name": self.studentName,
+            "student_name": studentNameLabel.text!,
             "device_uuid": addDeviceUUID.text!,
             "device_label": addDeviceLabel.text!,
             "device_msg": addDeviceMessage.text!,
@@ -254,21 +263,45 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 // TODO something on error
             }
             
-            guard let data = data else { return }
-
             print("SDFDFDF")
             
-            }.resume()
+        }.resume()
         
-        // TODO: make real
         let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!)
         
         self.deviceList.append(newDevice)
         
         self.deviceCollectionView.reloadData()
+        deviceCountLabel.text = String(self.deviceList.count) + " devices connected"
         addDeviceView.isHidden = true
     }
 
+    func deleteDevice() {
+        let urlString = "http://127.0.0.1:5000/device/" + addDeviceUUID.text!
+        guard let url = URL(string: urlString) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                // TODO something on error
+            }
+            
+        }.resume()
+        
+        for (idx, device) in deviceList.enumerated() {
+            if device.device_uuid == addDeviceUUID.text {
+                deviceList.remove(at: idx)
+            }
+        }
+        
+        self.deviceCollectionView.reloadData()
+        deviceCountLabel.text = String(self.deviceList.count) + " devices connected"
+        addDeviceView.isHidden = true
+        
+    }
 
     /*
     // MARK: - Navigation
