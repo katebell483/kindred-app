@@ -202,7 +202,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     private func loadDevices() {
         
         //Implementing URLSession
-        let urlString = "http://127.0.0.1:5000/devices/" + self.studentName
+        let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -238,7 +238,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     func addDevice() {
         //Implementing URLSession
-        let urlString = "http://127.0.0.1:5000/device"
+        let urlString = "https://kindred-web.herokuapp.com/device"
         guard let url = URL(string: urlString) else { return }
         
         let postData: [String: String] = [
@@ -277,7 +277,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     }
 
     func deleteDevice() {
-        let urlString = "http://127.0.0.1:5000/device/" + addDeviceUUID.text!
+        let urlString = "https://kindred-web.herokuapp.com/device/" + addDeviceUUID.text!
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)

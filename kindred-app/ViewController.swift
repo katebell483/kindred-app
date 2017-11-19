@@ -91,7 +91,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private func loadStudentList() {
         
         //Implementing URLSession
-        let urlString = "http://127.0.0.1:5000/studentList"
+        let urlString = "https://kindred-web.herokuapp.com/studentList"
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -126,7 +126,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     private func deleteStudent(studentName: String) {
-        let urlString = "http://127.0.0.1:5000/student/" + studentName
+        let urlString = "https://kindred-web.herokuapp.com/student/" + studentName
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
