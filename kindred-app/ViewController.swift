@@ -69,7 +69,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentList.count
     }
-
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            let cell:StudentCell = tableView.cellForRow(at: indexPath) as! StudentCell;
+            deleteStudent(studentName: cell.studentName.text!)
+            print("DELETE STUDENT")
+            // handle delete (by removing the data from your array and updating the tableview)
+        }
+    }
+    
     struct StudentInfo: Codable {
         let student_name: String
         let device_count: Int
@@ -110,6 +123,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         //End implementing URLSession
         
+    }
+    
+    private func deleteStudent(studentName: String) {
+        let urlString = "http://127.0.0.1:5000/student/" + studentName
+        guard let url = URL(string: urlString) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                // TODO something on error
+            }
+            
+            }.resume()
+        
+        for (idx, student) in studentList.enumerated() {
+            if student.student_name == studentName {
+                studentList.remove(at: idx)
+            }
+        }
+        
+        self.tableView.reloadData()
     }
 
 }
