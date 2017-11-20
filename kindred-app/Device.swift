@@ -13,4 +13,5 @@ struct Device: Codable {
     let device_msg: String
     let device_label: String
     let device_icon: String
+    let student_name: String
 }

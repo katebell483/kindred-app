@@ -267,7 +267,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             
         }.resume()
         
-        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!)
+        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!,student_name: studentNameLabel.text!)
         
         self.deviceList.append(newDevice)
         

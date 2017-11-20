@@ -10,18 +10,11 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
-var txCharacteristic : CBCharacteristic?
-var rxCharacteristic : CBCharacteristic?
-
-var blePeripheral : CBPeripheral?
-var characteristicASCIIValue = NSString()
-
-class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
+class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     //Data
     var centralManager : CBCentralManager!
     var data = NSMutableData()
-    var writeData: String = ""
     var timer = Timer()
     
     var writeCharacteristic: CBCharacteristic?
@@ -39,14 +32,13 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
     var BLEService_UUID:String = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
     var BLERead_UUID:String = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
     var BLEWrite_UUID:String = "6E400002-B5A3-F393-­E0A9-­E50E24DCCA9E"
-
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init() {
+        super.init()
         getAllDevices()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
-    
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == CBManagerState.poweredOn {
             // We will just handle it the easy way here: if Bluetooth is on, proceed...start scan!
@@ -94,13 +86,13 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
             peripheral.delegate = self
             self.centralManager?.connect(peripheral, options: nil)
         }
-
+        
     }
     
     // Connected to peripheral
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         debugPrint("Getting services1 ...")
-
+        
         // Ask for services
         peripheral.discoverServices(nil)
         
@@ -128,7 +120,7 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
     // Discovered peripheral characteristics
     func peripheral( _ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         print("discovered service characteristics")
-
+        
         // Look at provided characteristics
         for characteristic in service.characteristics! {
             
@@ -163,19 +155,27 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
             let device:Device = deviceList.filter{ $0.device_uuid == peripheral.identifier.uuidString }.first!
             let studentName:String = device.student_name
             let msg:String = device.device_msg
-
+            
             // send alert
             let alertVC = UIAlertController(title: studentName, message: msg, preferredStyle: UIAlertControllerStyle.alert)
             
             // write message back
             let action = UIAlertAction(title: "acknowledge", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) -> Void in
-                self.dismiss(animated: true, completion: nil)
+                self.topViewController()?.dismiss(animated: true, completion: nil)
                 self.acknowledgeNotification(peripheral: peripheral)
             })
             
             alertVC.addAction(action)
-            self.present(alertVC, animated: true, completion: nil)
+            self.topViewController()?.present(alertVC, animated: true, completion: nil)
         }
+    }
+    
+    func topViewController() -> UIViewController? {
+        guard var topViewController = UIApplication.shared.keyWindow?.rootViewController else { return nil }
+        while topViewController.presentedViewController != nil {
+            topViewController = topViewController.presentedViewController!
+        }
+        return topViewController
     }
     
     func acknowledgeNotification(peripheral: CBPeripheral) {
@@ -215,6 +215,6 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
             
             }.resume()
     }
-    
 }
+
 
