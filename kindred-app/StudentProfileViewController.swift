@@ -270,6 +270,9 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!,student_name: studentNameLabel.text!)
         
         self.deviceList.append(newDevice)
+
+        // update list of devices that BLE is looking for
+        BLEController().updateDevices() // TODO: verify that this is doing what its supposed to be doing...
         
         self.deviceCollectionView.reloadData()
         deviceCountLabel.text = String(self.deviceList.count) + " devices connected"

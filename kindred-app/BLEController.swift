@@ -35,7 +35,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     override init() {
         super.init()
-        getAllDevices()
+        updateDevices()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
 
@@ -178,7 +178,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         peripheral.writeValue(response, for: writeCharacteristic!, type: CBCharacteristicWriteType.withResponse)
     }
     
-    func getAllDevices() {
+    func updateDevices() {
         let urlString = "https://kindred-web.herokuapp.com/devices"
         guard let url = URL(string: urlString) else { return }
         
