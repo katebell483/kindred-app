@@ -10,6 +10,7 @@ import UIKit
 
 class DeviceAddCollectionCell: UICollectionViewCell {
     @IBOutlet weak var addDeviceLabel: UILabel!
+    @IBOutlet weak var addDeviceBackground: UIView!
 }
 
 

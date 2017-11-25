@@ -8,22 +8,37 @@
 
 import UIKit
 
+extension UITextField {
+    open override func draw(_ rect: CGRect) {
+        self.layer.cornerRadius = 3.0
+        self.layer.borderWidth = 1.5
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        let text:String = self.placeholder!;
+        self.attributedPlaceholder = NSAttributedString(string: text, attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray])
+        self.layer.masksToBounds = true
+    }
+}
+
 class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // STUDENT INFO: TOP SECTION VIEW
     @IBOutlet weak var studentInfo: UIView!
     @IBOutlet weak var studentNameLabel: UILabel!
-    @IBOutlet weak var deviceCountLabel: UILabel!
+    @IBOutlet weak var deviceCountDescriptor: UILabel!
+    @IBOutlet weak var deviceCount: UILabel!
     @IBOutlet weak var studentNameTextInput: UITextField!
-    @IBOutlet weak var studentIconView: UIView!
+    @IBOutlet weak var studentInitialsBackground: UIView!
+    @IBOutlet weak var studentInitials: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     
     // student enter
     @IBAction func newStudentNameEntered(_ sender: Any) {
-        print("NAME ENTERED")
         self.studentName = studentNameTextInput.text!
         studentNameTextInput.isHidden = true
         studentNameLabel.text = self.studentName
         studentNameLabel.isHidden = false
+        let index = self.studentName.index(self.studentName.startIndex, offsetBy: 1)
+        studentInitials.text = String(self.studentName.prefix(upTo: index))
     }
     
     // COLLECTION OF DEVICE VIEW
@@ -40,6 +55,9 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceIconLabel: UILabel!
     @IBOutlet weak var deleteDeviceButton: UIButton!
     
+    @IBAction func addDeviceCloseButton(_ sender: Any) {
+        addDeviceView.isHidden = true
+    }
     // ICON VIEW
     @IBOutlet weak var iconView: UICollectionView!
     var icons = [UIImage(named:"airplane")!,
@@ -55,13 +73,20 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 UIImage(named: "cosmetics")!,
                 UIImage(named:"customer-problem")!]
     
+    @IBOutlet weak var iconViewPrompt: UILabel!
+    @IBOutlet weak var iconViewBackButton: UIButton!
+    @IBAction func iconViewBackTrigger(_ sender: Any) {
+        toggleIconView()
+    }
+    
+    
     var iconLabels = ["airplane", "toilet-paper", "water", "leaf","lily-1","alarm-clock","breakfast","dinner","improvement","list","cosmetics","customer-problem"]
     
+
+    var iconColor = UIColor.init(red: 186/255, green: 209/255, blue: 196/255, alpha: 1);
+    
     @IBAction func changeIcon(_ sender: Any) {
-        studentInfo.isHidden = true
-        addDeviceView.isHidden = true
-        deviceCollectionView.isHidden = true
-        iconView.isHidden = false
+        toggleIconView()
     }
     
     let cellReuseIdentifier = "DeviceCell"
@@ -69,7 +94,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     let iconReuseIdentifier = "IconCell"
 
     var studentName:String = "";
-    var deviceCount:String = "";
+    var deviceCountNum:String = "";
     var keepAddDeviceOpen:Bool = false;
     var currDevice:Device? = nil;
     
@@ -89,24 +114,51 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.isUserInteractionEnabled = true
+        
         // hide the add device view on default
         iconView.isHidden = true
+        iconViewPrompt.isHidden = true
+        iconViewBackButton.isHidden = true
         addDeviceView.isHidden = true
+        
+        //addDeviceIconButton.layer.borderColor = UIColor.gray as! CGColor;
+        
+        // add Device Fields
+        addDeviceIconButton.layer.borderColor = UIColor.lightGray.cgColor
+        addDeviceIconButton.layer.borderWidth = 1.5
+        addDeviceIconButton.layer.cornerRadius = 10
+        addDeviceIconButton.imageEdgeInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+        addDeviceLabel.layer.borderColor = UIColor.lightGray.cgColor
+        addDeviceUUID.layer.borderColor = UIColor.lightGray.cgColor
+        addDeviceMessage.layer.borderColor = UIColor.lightGray.cgColor
         
         // is this a new student?
         if(self.studentName.isEmpty) {
             studentNameTextInput.isHidden = false
             studentNameLabel.isHidden = true
-            self.deviceCount = "0"
+            self.deviceCountNum = "0"
+            studentInitials.text = ""
+
         } else {
             studentNameTextInput.isHidden = true
             studentNameLabel.isHidden = false
             studentNameLabel.text = self.studentName
+            let index = self.studentName.index(self.studentName.startIndex, offsetBy: 1)
+            studentInitials.text = String(self.studentName.prefix(upTo: index))
         }
 
-        deviceCountLabel.text = self.deviceCount + " devices connected"
-        studentIconView.backgroundColor = UIColor.blue
-
+        deviceCountDescriptor.text = "Devices Connected"
+        deviceCount.text = self.deviceCountNum
+        studentInitialsBackground.backgroundColor = iconColor
+        
+        studentInitialsBackground.layer.cornerRadius = 10
+        studentInitialsBackground.layer.shadowColor = UIColor.gray.cgColor
+        studentInitialsBackground.layer.shadowOpacity = 0.3
+        studentInitialsBackground.layer.shadowRadius = 6
+        studentInitialsBackground.layer.shadowOffset.width = 2
+        studentInitialsBackground.layer.shadowOffset.height = 2
+        
         print(self.studentName)
         print(self.deviceCount)
         
@@ -135,6 +187,14 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
             if(indexPath.row == deviceList.count) {
                 let cell:DeviceAddCollectionCell = self.deviceCollectionView.dequeueReusableCell(withReuseIdentifier: deviceAddCellIdentifier, for: indexPath as IndexPath) as! DeviceAddCollectionCell
+                
+                    // styles for add device button
+                    cell.addDeviceBackground.layer.shadowColor = UIColor.gray.cgColor
+                    cell.addDeviceBackground.layer.shadowOpacity = 0.3
+                    cell.addDeviceBackground.layer.shadowRadius = 6
+                    cell.addDeviceBackground.layer.shadowOffset.width = 1
+                    cell.addDeviceBackground.layer.shadowOffset.height = 1
+                    cell.addDeviceBackground.layer.cornerRadius = 30
                 return cell
             }
             
@@ -160,14 +220,24 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         }
         
     }
-
+    
+    func touchesBegan(_ touches: Set<AnyHashable>, with event: UIEvent) {
+        print("here!")
+        let touch: UITouch? = touches.first as! UITouch
+        //location is relative to the current view
+        // do something with the touched point
+        if touch?.view != addDeviceView {
+            addDeviceView.isHidden = true
+        }
+    }
+    
     // detect touch of addition
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == deviceCollectionView {
             if indexPath.row == deviceList.count {
-                addDeviceButton.setTitle("add device", for: .normal)
-                deleteDeviceButton.isHidden = true;
+                addDeviceButton.setTitle("Add Device", for: .normal)
+                //deleteDeviceButton.isHidden = true;
                 addDeviceIconButton.setImage(nil, for: .normal);
                 addDeviceLabel.text = nil;
                 addDeviceMessage.text = nil;
@@ -176,27 +246,36 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 addDeviceView.isHidden = false
             } else {
                 let cell:DeviceCollectionCell = collectionView.cellForItem(at: indexPath) as! DeviceCollectionCell;
-
-                addDeviceButton.setTitle("update device", for: .normal)
-                deleteDeviceButton.isHidden = false;
+                addDeviceButton.setTitle("Update Device", for: .normal)
+                //deleteDeviceButton.isHidden = false;
                 addDeviceLabel.text = cell.deviceLabel.text;
                 addDeviceMessage.text = cell.deviceLabel.text;
                 addDeviceUUID.text = cell.deviceUUID.text;
                 addDeviceIconLabel.text = cell.deviceIconLabel.text;
                 addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
-                
+                addDeviceIconButton.imageView?.tintColor = UIColor.black
                 addDeviceView.isHidden = false
+
             }
+
         } else {
             let cell:IconCollectionCell = collectionView.cellForItem(at: indexPath) as! IconCollectionCell;
             addDeviceIconButton.setImage(cell.iconImage.image, for: .normal);
+            addDeviceIconButton.imageView?.tintColor = UIColor.black
             addDeviceIconLabel.text = cell.iconLabel.text
-            studentInfo.isHidden = false
-            addDeviceView.isHidden = false
-            deviceCollectionView.isHidden = false
-            iconView.isHidden = true
+            toggleIconView()
         }
         
+    }
+    
+    func toggleIconView() {
+        iconView.isHidden = !iconView.isHidden
+        iconViewBackButton.isHidden = !iconViewBackButton.isHidden
+        iconViewPrompt.isHidden = !iconViewPrompt.isHidden
+        studentInfo.isHidden = !studentInfo.isHidden
+        addDeviceView.isHidden = !addDeviceView.isHidden
+        deviceCollectionView.isHidden = !deviceCollectionView.isHidden
+        backButton.isHidden = !backButton.isHidden
     }
     
     private func loadDevices() {
@@ -239,6 +318,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     func addDevice() {
         //Implementing URLSession
         let urlString = "https://kindred-web.herokuapp.com/device"
+
         guard let url = URL(string: urlString) else { return }
         
         let postData: [String: String] = [
@@ -258,7 +338,6 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                print("UH PH")
                 print(error!.localizedDescription)
                 // TODO something on error
             }
@@ -275,7 +354,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         BLEController().updateDevices() // TODO: verify that this is doing what its supposed to be doing...
         
         self.deviceCollectionView.reloadData()
-        deviceCountLabel.text = String(self.deviceList.count) + " devices connected"
+        deviceCount.text = String(self.deviceList.count) 
+        deviceCountDescriptor.text = "devices connected"
         addDeviceView.isHidden = true
     }
 
@@ -301,7 +381,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         }
         
         self.deviceCollectionView.reloadData()
-        deviceCountLabel.text = String(self.deviceList.count) + " devices connected"
+        deviceCount.text = String(self.deviceList.count) + " Devices Connected"
         addDeviceView.isHidden = true
         
     }

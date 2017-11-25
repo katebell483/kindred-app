@@ -14,15 +14,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // These are the colors of the square views in our table view cells.
     // In a real project you might use UIImages.
-    let colors = [UIColor.blue, UIColor.yellow, UIColor.magenta, UIColor.red, UIColor.brown]
+    var colors = [UIColor]()
     
     let cellReuseIdentifier = "cell"
     
+    @IBOutlet weak var addStudentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //let blue1:UIColor = UIColor.init(red: 47, green: 112, blue: 255, alpha: 1)
+        
+        let blue1 = UIColor.init(red: 186/255, green: 209/255, blue: 196/255, alpha: 1);
+        let blue2 = UIColor.init(red: 114/255, green: 137/255, blue: 141/255, alpha: 1);
+        let blue3 = UIColor.init(red: 71/255, green: 90/255, blue: 106/255, alpha: 1);
+        let blue4 = UIColor.init(red: 43/255, green: 50/255, blue: 72/255, alpha: 1);
+        
+        colors.append(blue1)
+        colors.append(blue2)
+        colors.append(blue3)
+        colors.append(blue4)
+        
+        self.loadStyles()
         self.loadStudentList()
+    }
+    
+    func loadStyles() {
+        // add student button
+        addStudentButton.layer.cornerRadius = 30
+        addStudentButton.backgroundColor = colors[2]
+        addStudentButton.layer.shadowColor = UIColor.gray.cgColor
+        addStudentButton.layer.shadowOpacity = 0.3
+        addStudentButton.layer.shadowRadius = 6
+        addStudentButton.layer.shadowOffset.width = 1
+        addStudentButton.layer.shadowOffset.height = 1
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,8 +62,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let student = studentList[indexPath.row]
         
-        print(student.student_name)
-        
         var colorIndex:Int = 0;
         if indexPath.row < self.colors.count {
             colorIndex = indexPath.row
@@ -45,9 +69,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             colorIndex = indexPath.row % self.colors.count
         }
         
-        cell.myView.backgroundColor = self.colors[colorIndex]
+        cell.studentInitialBackground.backgroundColor = self.colors[colorIndex]
+        cell.studentInitialBackground.layer.cornerRadius = 10
+        
+        cell.studentInitialBackground.layer.shadowColor = UIColor.gray.cgColor
+        cell.studentInitialBackground.layer.shadowOpacity = 0.3
+        cell.studentInitialBackground.layer.shadowRadius = 6
+        cell.studentInitialBackground.layer.shadowOffset.width = 2
+        cell.studentInitialBackground.layer.shadowOffset.height = 2
+ 
         cell.studentName.text = student.student_name;
-        cell.deviceCount.text = String(student.device_count);
+        cell.deviceCount.text = String(student.device_count)
+        cell.deviceCountDescriptor.text = "Devices Connected"
+        let index = student.student_name.index(student.student_name.startIndex, offsetBy: 1)
+        cell.studentInitials.text = String(student.student_name.prefix(upTo: index))
         
         return cell
     }
@@ -60,7 +95,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let studentProfileView = self.storyboard?.instantiateViewController(withIdentifier: "Profile") as! StudentProfileViewController
         
         studentProfileView.studentName = name
-        studentProfileView.deviceCount = deviceNumber
+        studentProfileView.deviceCountNum = deviceNumber
+        
+        var colorIndex:Int = 0;
+        if indexPath.row < self.colors.count {
+            colorIndex = indexPath.row
+        } else {
+            colorIndex = indexPath.row % self.colors.count
+        }
+    
+        studentProfileView.iconColor = colors[colorIndex]
 
         self.present(studentProfileView, animated: true, completion: nil)
     }

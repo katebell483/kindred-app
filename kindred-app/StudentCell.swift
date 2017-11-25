@@ -9,7 +9,9 @@
 import UIKit
 
 class StudentCell: UITableViewCell {
-    @IBOutlet weak var myView: UIView!
+    @IBOutlet weak var studentInitialBackground: UIView!
     @IBOutlet weak var studentName: UILabel!
     @IBOutlet weak var deviceCount: UILabel!
+    @IBOutlet weak var deviceCountDescriptor: UILabel!
+    @IBOutlet weak var studentInitials: UILabel!
 }
