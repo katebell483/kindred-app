@@ -135,6 +135,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         //Implementing URLSession
         let urlString = "https://kindred-web.herokuapp.com/studentList"
+        //let urlString = "https://127.0.0.1:8000/studentList"
+
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in

@@ -19,7 +19,7 @@ extension UITextField {
     }
 }
 
-class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
 
     // STUDENT INFO: TOP SECTION VIEW
     @IBOutlet weak var studentInfo: UIView!
@@ -106,15 +106,14 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         addDevice()
     }
     
-    // send the delete request
-    @IBAction func deleteDeviceButton(_ sender: Any) {
-        deleteDevice()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.isUserInteractionEnabled = true
+        
+        let longPress = UILongPressGestureRecognizer(
+            target: self, action: #selector(longPressHandler))
+        deviceCollectionView.addGestureRecognizer(longPress)
         
         // hide the add device view on default
         iconView.isHidden = true
@@ -163,8 +162,6 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         print(self.deviceCount)
         
         loadDevices()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -172,6 +169,32 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         // Dispose of any resources that can be recreated.
     }
  
+    @objc func longPressHandler(press:UILongPressGestureRecognizer){
+        if(press.state == .ended) {
+            let point = press.location(in: self.deviceCollectionView)
+            let indexPath = self.deviceCollectionView.indexPathForItem(at: point)
+            
+            if let index = indexPath {
+                var cell:DeviceCollectionCell = self.deviceCollectionView.cellForItem(at: index) as! DeviceCollectionCell
+                
+                let deleteDeviceAlert = UIAlertController(title: "Delete", message: "Delete this device?", preferredStyle: UIAlertControllerStyle.alert)
+                
+                deleteDeviceAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                    self.deleteDevice(uuid: cell.deviceUUID.text!)
+                }))
+                
+                deleteDeviceAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                    print("Handle Cancel Logic here")
+                }))
+                
+                present(deleteDeviceAlert, animated: true, completion: nil)
+                
+            } else {
+                print("Could not find index path")
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == deviceCollectionView {
             return deviceList.count + 1
@@ -179,7 +202,6 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             return icons.count
         }
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -204,9 +226,9 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             
             let icon: UIImage = UIImage(named: device.device_icon)!
             cell.deviceIcon.image = icon
-            cell.deviceLabel.text = device.device_label
+            cell.deviceLabel.text = device.device_label.capitalized
             cell.deviceUUID.text = device.device_uuid
-            cell.deviceMsg.text = device.device_msg
+            cell.deviceMsg.text = device.device_msg.capitalized
             cell.deviceIconLabel.text = device.device_icon
             
             return cell
@@ -221,14 +243,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
-    func touchesBegan(_ touches: Set<AnyHashable>, with event: UIEvent) {
-        print("here!")
-        let touch: UITouch? = touches.first as! UITouch
-        //location is relative to the current view
-        // do something with the touched point
-        if touch?.view != addDeviceView {
-            addDeviceView.isHidden = true
-        }
+    func longPressed(sender: UILongPressGestureRecognizer) {
+        print("longpressed")
     }
     
     // detect touch of addition
@@ -282,6 +298,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
         //Implementing URLSession
         let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName
+        //let urlString = "https://127.0.0.1:8000/devices" + self.studentName
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -359,8 +376,9 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         addDeviceView.isHidden = true
     }
 
-    func deleteDevice() {
-        let urlString = "https://kindred-web.herokuapp.com/device/" + addDeviceUUID.text!
+    func deleteDevice(uuid: String) {
+        print("deleting device")
+        let urlString = "https://kindred-web.herokuapp.com/device/" + uuid
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
@@ -375,15 +393,13 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         }.resume()
         
         for (idx, device) in deviceList.enumerated() {
-            if device.device_uuid == addDeviceUUID.text {
+            if device.device_uuid == uuid {
                 deviceList.remove(at: idx)
             }
         }
         
         self.deviceCollectionView.reloadData()
-        deviceCount.text = String(self.deviceList.count) + " Devices Connected"
-        addDeviceView.isHidden = true
-        
+        deviceCount.text = String(self.deviceList.count)
     }
 
     /*

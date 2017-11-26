@@ -227,6 +227,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UHC-Tl-3zG">
                                                     <rect key="frame" x="10" y="14" width="70" height="70"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -262,6 +263,7 @@
                                                 </view>
                                             </subviews>
                                         </view>
+                                        <gestureRecognizers/>
                                         <size key="customSize" width="90" height="110"/>
                                         <connections>
                                             <outlet property="addDeviceBackground" destination="1yh-fJ-YVF" id="gR7-Zi-rXD"/>
@@ -408,7 +410,7 @@
                                             <action selector="newStudentNameEntered:" destination="Kdn-7n-KMv" eventType="editingDidEnd" id="10G-9k-m6s"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Student name label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I52-Mj-P27">
+                                    <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Student name label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I52-Mj-P27">
                                         <rect key="frame" x="121" y="8" width="181" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
@@ -427,6 +429,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="cBI-DA-5G1"/>
                     </view>
                     <connections>
