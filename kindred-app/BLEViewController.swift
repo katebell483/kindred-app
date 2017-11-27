@@ -62,7 +62,7 @@ class BLEViewController : UIViewController, CBCentralManagerDelegate, CBPeripher
         print("Now Scanning...")
         self.timer.invalidate()
         centralManager?.scanForPeripherals(withServices: nil , options: nil)
-        Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.cancelScan), userInfo: nil, repeats: false)
+        //Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.cancelScan), userInfo: nil, repeats: false)
     }
     
     @objc func cancelScan() {

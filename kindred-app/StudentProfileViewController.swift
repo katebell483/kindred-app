@@ -19,7 +19,7 @@ extension UITextField {
     }
 }
 
-class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+class StudentProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UITextFieldDelegate {
 
     // STUDENT INFO: TOP SECTION VIEW
     @IBOutlet weak var studentInfo: UIView!
@@ -158,10 +158,17 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         studentInitialsBackground.layer.shadowOffset.width = 2
         studentInitialsBackground.layer.shadowOffset.height = 2
         
-        print(self.studentName)
-        print(self.deviceCount)
-        
+        self.studentNameTextInput.delegate = self
+        self.addDeviceUUID.delegate = self
+        self.addDeviceLabel.delegate = self
+        self.addDeviceMessage.delegate = self
+
         loadDevices()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 
     override func didReceiveMemoryWarning() {
@@ -368,8 +375,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         self.deviceList.append(newDevice)
 
         // update list of devices that BLE is looking for
-        BLEController().updateDevices() // TODO: verify that this is doing what its supposed to be doing...
-        
+        //BLEController().updateDevices() // TODO: verify that this is doing what its supposed to be doing...
+    
         self.deviceCollectionView.reloadData()
         deviceCount.text = String(self.deviceList.count) 
         deviceCountDescriptor.text = "devices connected"

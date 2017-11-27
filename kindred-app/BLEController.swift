@@ -22,11 +22,11 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var peripheral:CBPeripheral!
     var scanEnabled:Bool = false
     
+    // devices
+    var deviceList = [Device]()
+    
     // peripheral list
     var peripherals: [CBPeripheral] = []
-    
-    // devices
-    public var allDeviceList = [Device]()
     
     var BLEDevice_UUID:String = "379B5933-F6FC-00BB-AFF4-CF8E1269327B"
     var BLEService_UUID:String = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -38,7 +38,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         updateDevices()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
-
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == CBManagerState.poweredOn {
             // We will just handle it the easy way here: if Bluetooth is on, proceed...start scan!
@@ -52,8 +52,9 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     func startScan() {
         print("Now Scanning...")
-        let arrayOfServices: [CBUUID] = [CBUUID(string: BLEService_UUID)]
-        centralManager?.scanForPeripherals(withServices: arrayOfServices , options: [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(value: true)])
+        self.timer.invalidate()
+        centralManager?.scanForPeripherals(withServices: nil , options: nil)
+        Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.cancelScan), userInfo: nil, repeats: false)
     }
     
     @objc func cancelScan() {
@@ -72,15 +73,20 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         
         if(uuid.uuidString == BLEDevice_UUID) {
             print("this should be found")
-            debugPrint(allDeviceList)
+            debugPrint(deviceList)
         }
         
-        if(allDeviceList.contains { $0.device_uuid == uuid.uuidString }) {
+        if(deviceList.contains { $0.device_uuid == uuid.uuidString }) {
             print("found kindred device")
+            //self.peripherals.append(peripheral)
+            self.centralManager?.stopScan() // haev to figure out how to connect to more than one
+            //self.peripheral = peripheral
             peripherals.append(peripheral)
+            //self.peripheral.delegate = self
             peripheral.delegate = self
             self.centralManager?.connect(peripheral, options: nil)
         }
+        
     }
     
     // Connected to peripheral
@@ -146,7 +152,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if characteristic.uuid.uuidString == "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" {
             
             // get device info from list
-            let device:Device = allDeviceList.filter{ $0.device_uuid == peripheral.identifier.uuidString }.first!
+            let device:Device = deviceList.filter{ $0.device_uuid == peripheral.identifier.uuidString }.first!
             let studentName:String = device.student_name
             let msg:String = device.device_msg
             
@@ -197,7 +203,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 
                 //Get back to the main queue
                 DispatchQueue.main.async {
-                    self.allDeviceList = deviceData
+                    self.deviceList = deviceData
                     if(self.scanEnabled) {
                         self.startScan();
                     }
