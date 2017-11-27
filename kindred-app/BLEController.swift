@@ -15,7 +15,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     //Data
     var centralManager : CBCentralManager!
     var data = NSMutableData()
-    var timer = Timer()
+    //var timer = Timer()
     
     var writeCharacteristic: CBCharacteristic?
     var readCharacteristic: CBCharacteristic?
@@ -35,7 +35,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     override init() {
         super.init()
-        updateDevices()
+        //updateDevices()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
@@ -51,14 +51,15 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     func startScan() {
+        let arrayOfServices: [CBUUID] = [CBUUID(string: BLEService_UUID)]
         print("Now Scanning...")
-        self.timer.invalidate()
-        centralManager?.scanForPeripherals(withServices: nil , options: nil)
-        Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.cancelScan), userInfo: nil, repeats: false)
+        centralManager?.scanForPeripherals(withServices: arrayOfServices, options: nil)
+        //self.timer.invalidate()
+        Timer.scheduledTimer(timeInterval: 100, target: self, selector: #selector(self.cancelScan), userInfo: nil, repeats: false)
     }
     
     @objc func cancelScan() {
-        self.centralManager?.stopScan()
+        //self.centralManager?.stopScan()
         print("Scan Stopped")
         print("Number of Peripherals Found: \(peripherals.count)")
     }
@@ -79,7 +80,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if(deviceList.contains { $0.device_uuid == uuid.uuidString }) {
             print("found kindred device")
             //self.peripherals.append(peripheral)
-            self.centralManager?.stopScan() // haev to figure out how to connect to more than one
+            //self.centralManager?.stopScan() // haev to figure out how to connect to more than one
             //self.peripheral = peripheral
             peripherals.append(peripheral)
             //self.peripheral.delegate = self
@@ -205,6 +206,7 @@ class BLEController : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 DispatchQueue.main.async {
                     self.deviceList = deviceData
                     if(self.scanEnabled) {
+                        print("HERE!")
                         self.startScan();
                     }
                 }

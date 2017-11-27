@@ -19,7 +19,6 @@
 		44D1F4D21FB359B000E3C6C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D1F4D01FB359B000E3C6C4 /* Main.storyboard */; };
 		44D1F4D41FB359B000E3C6C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D1F4D31FB359B000E3C6C4 /* Assets.xcassets */; };
 		44D1F4D71FB359B000E3C6C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D1F4D51FB359B000E3C6C4 /* LaunchScreen.storyboard */; };
-		44D377981FC212A300EAB5F0 /* BLEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D377971FC212A300EAB5F0 /* BLEViewController.swift */; };
 		44D3779D1FC22AC600EAB5F0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D3779C1FC22AA200EAB5F0 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +37,6 @@
 		44D1F4D31FB359B000E3C6C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44D1F4D61FB359B000E3C6C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44D1F4D81FB359B000E3C6C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		44D377971FC212A300EAB5F0 /* BLEViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEViewController.swift; sourceTree = "<group>"; };
 		44D3779C1FC22AA200EAB5F0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -79,7 +77,6 @@
 				44D1F4CC1FB359B000E3C6C4 /* AppDelegate.swift */,
 				44D1F4CE1FB359B000E3C6C4 /* ViewController.swift */,
 				44D1F4D01FB359B000E3C6C4 /* Main.storyboard */,
-				44D377971FC212A300EAB5F0 /* BLEViewController.swift */,
 				4491D5721FBFB624004FACC4 /* IconCollectionCell.swift */,
 				440596981FBF54DF003DAF0C /* DeviceAddCollectionCell.swift */,
 				4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */,
@@ -178,7 +175,6 @@
 				4491D5771FBFC8C6004FACC4 /* Device.swift in Sources */,
 				44D1F4CD1FB359B000E3C6C4 /* AppDelegate.swift in Sources */,
 				440596991FBF54DF003DAF0C /* DeviceAddCollectionCell.swift in Sources */,
-				44D377981FC212A300EAB5F0 /* BLEViewController.swift in Sources */,
 				440D342D1FC3813200273015 /* BLEController.swift in Sources */,
 				4443B17E1FBE490E00B32B68 /* StudentProfileViewController.swift in Sources */,
 				449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */,

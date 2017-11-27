@@ -171,7 +171,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     private func deleteStudent(studentName: String) {
-        let urlString = "https://kindred-web.herokuapp.com/student/" + studentName
+        let urlString = "https://kindred-web.herokuapp.com/student/" + studentName.lowercased()
+        //let urlString = "https://127.0.0.1:8000/student/" + studentName
+        print(urlString)
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
