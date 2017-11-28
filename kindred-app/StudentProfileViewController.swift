@@ -34,11 +34,14 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     // student enter
     @IBAction func newStudentNameEntered(_ sender: Any) {
         self.studentName = studentNameTextInput.text!
+        if(self.studentName == "") {
+            return
+        }
         studentNameTextInput.isHidden = true
-        studentNameLabel.text = self.studentName
+        studentNameLabel.text = self.studentName.capitalized
         studentNameLabel.isHidden = false
         let index = self.studentName.index(self.studentName.startIndex, offsetBy: 1)
-        studentInitials.text = String(self.studentName.prefix(upTo: index))
+        studentInitials.text = String(self.studentName.prefix(upTo: index)).capitalized
     }
     
     // COLLECTION OF DEVICE VIEW
@@ -55,9 +58,14 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceIconLabel: UILabel!
     @IBOutlet weak var deleteDeviceButton: UIButton!
     
+    // VAR KEEPING STATE OF KEYBOARD ADJUSTMENT
+    var viewAdjustedForKeyboard:Bool = false
+    var activeField: UITextField?
+    
     @IBAction func addDeviceCloseButton(_ sender: Any) {
         addDeviceView.isHidden = true
     }
+    
     // ICON VIEW
     @IBOutlet weak var iconView: UICollectionView!
     var icons = [UIImage(named:"airplane")!,
@@ -164,6 +172,50 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         self.addDeviceMessage.delegate = self
 
         loadDevices()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    //Calls this function when the tap is recognized.
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        activeField = nil
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if(activeField != studentNameTextInput) {
+            viewAdjustedForKeyboard = true
+            var rect:CGRect = self.view.frame;
+            rect.origin.y -= 250.0;
+            rect.size.height += 250.0;
+            self.view.frame = rect;
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if(viewAdjustedForKeyboard) {
+            viewAdjustedForKeyboard = false
+            var rect:CGRect = self.view.frame;
+            rect.origin.y += 250.0;
+            rect.size.height -= 250.0;
+            self.view.frame = rect;
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
