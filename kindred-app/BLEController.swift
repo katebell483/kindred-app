@@ -1,7 +1,8 @@
 import CoreBluetooth
 import UIKit
+import UserNotifications
 
-public class BluetoothService: NSObject {
+public class BluetoothService: NSObject, UNUserNotificationCenterDelegate {
     
     var manager: CBCentralManager!
     var characteristic: CBCharacteristic!
@@ -14,6 +15,9 @@ public class BluetoothService: NSObject {
 
     // devices
     var deviceList = [Device]()
+    
+    // push notifications
+    var isGrantedNotificationAccess:Bool = false
     
     // peripheral list
     var writeCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
@@ -30,6 +34,30 @@ public class BluetoothService: NSObject {
         super.init()
         self.updateDevices()
         manager = CBCentralManager(delegate: self, queue: nil)
+        
+        // did user agree to push notifications
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert,.sound,.badge],
+            completionHandler: { (granted,error) in
+                self.isGrantedNotificationAccess = granted
+            }
+        )
+        
+        // set up notifications to have acknowledge response
+        let acknowledgeAction = UNNotificationAction(
+            identifier: "acknowledge",
+            title: "Acknowledge Request",
+            options: [])
+        
+        let acknowledgeCategory = UNNotificationCategory(
+            identifier: "acknowledge.category",
+            actions: [acknowledgeAction],
+            intentIdentifiers: [],
+            options: [])
+        
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().setNotificationCategories([acknowledgeCategory])
+
     }
     
     func updateDevices() {
@@ -77,6 +105,17 @@ public class BluetoothService: NSObject {
         let writeCharacteristic:CBCharacteristic = writeCharacteristics[peripheral]!
         peripheral.writeValue(response, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
     }
+    
+    func addNotification(content:UNNotificationContent, trigger:UNNotificationTrigger?, indentifier:String) {
+        let request = UNNotificationRequest(identifier: indentifier, content: content,trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: {
+            (errorObject) in
+                if let error = errorObject{
+                    print("Error \(error.localizedDescription) in notification \(indentifier)")
+                }
+            })
+    }
 }
 
 extension BluetoothService: CBCentralManagerDelegate {
@@ -113,6 +152,24 @@ extension BluetoothService: CBCentralManagerDelegate {
         peripheral.discoverServices([service_uuid])
     }
     
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert,.sound, .badge])
+    }
+    
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let identifier = response.actionIdentifier
+        let request = response.notification.request
+        
+
+        let peripheral_uuid = request.identifier
+        let peripheral:CBPeripheral = peripherals.filter{ $0.identifier.uuidString == peripheral_uuid }.first!
+        print(identifier)
+        if identifier == "acknowledge" {
+            acknowledgeNotification(peripheral: peripheral)
+        }
+        
+        completionHandler()
+    }
 }
 
 extension BluetoothService: CBPeripheralDelegate {
@@ -171,6 +228,21 @@ extension BluetoothService: CBPeripheralDelegate {
             let studentName:String = device.student_name
             let msg:String = device.device_msg
             
+            let content = UNMutableNotificationContent()
+            content.title = studentName
+            content.body = msg
+            content.sound = UNNotificationSound(named: "Realization.aiff")
+            content.categoryIdentifier = "message"
+            content.categoryIdentifier = "acknowledge.category"
+            
+            let trigger = UNTimeIntervalNotificationTrigger(
+                timeInterval: 0.1,
+                repeats: false)
+            
+            addNotification(content: content, trigger: trigger, indentifier: peripheral.identifier.uuidString)
+        
+            /*
+            
             // send alert
             let alertVC = UIAlertController(title: studentName, message: msg, preferredStyle: UIAlertControllerStyle.alert)
             
@@ -182,6 +254,7 @@ extension BluetoothService: CBPeripheralDelegate {
             
             alertVC.addAction(action)
             self.topViewController()?.present(alertVC, animated: true, completion: nil)
+            */
         }
     }
     

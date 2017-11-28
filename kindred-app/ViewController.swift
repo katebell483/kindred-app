@@ -38,6 +38,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.loadStyles()
         self.loadStudentList()
+
     }
     
     func loadStyles() {
