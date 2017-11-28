@@ -11,7 +11,6 @@
 		440D342D1FC3813200273015 /* BLEController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440D342C1FC3813200273015 /* BLEController.swift */; };
 		4443B17E1FBE490E00B32B68 /* StudentProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */; };
 		4443B1801FBE53C300B32B68 /* DeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */; };
-		4470EAB71FCCD491005D55BD /* BLEController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4470EAB61FCCD491005D55BD /* BLEController2.swift */; };
 		449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B11FBCCCF800DF1A92 /* StudentCell.swift */; };
 		4491D5731FBFB624004FACC4 /* IconCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4491D5721FBFB624004FACC4 /* IconCollectionCell.swift */; };
 		4491D5771FBFC8C6004FACC4 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4491D5761FBFC8C6004FACC4 /* Device.swift */; };
@@ -28,7 +27,6 @@
 		440D342C1FC3813200273015 /* BLEController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEController.swift; sourceTree = "<group>"; };
 		4443B17D1FBE490E00B32B68 /* StudentProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentProfileViewController.swift; sourceTree = "<group>"; };
 		4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCollectionCell.swift; sourceTree = "<group>"; };
-		4470EAB61FCCD491005D55BD /* BLEController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BLEController2.swift; path = "/Users/kate/Desktop/berk_dev/294_084/kindred-app/kindred-app/BLEController2.swift"; sourceTree = "<absolute>"; };
 		449118B11FBCCCF800DF1A92 /* StudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		4491D5721FBFB624004FACC4 /* IconCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionCell.swift; sourceTree = "<group>"; };
 		4491D5761FBFC8C6004FACC4 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 		44D1F4CB1FB359B000E3C6C4 /* kindred-app */ = {
 			isa = PBXGroup;
 			children = (
-				4470EAB61FCCD491005D55BD /* BLEController2.swift */,
 				440D342C1FC3813200273015 /* BLEController.swift */,
 				4491D5761FBFC8C6004FACC4 /* Device.swift */,
 				44D1F4CC1FB359B000E3C6C4 /* AppDelegate.swift */,
@@ -174,7 +171,6 @@
 			files = (
 				4491D5731FBFB624004FACC4 /* IconCollectionCell.swift in Sources */,
 				44D1F4CF1FB359B000E3C6C4 /* ViewController.swift in Sources */,
-				4470EAB71FCCD491005D55BD /* BLEController2.swift in Sources */,
 				4443B1801FBE53C300B32B68 /* DeviceCollectionCell.swift in Sources */,
 				4491D5771FBFC8C6004FACC4 /* Device.swift in Sources */,
 				44D1F4CD1FB359B000E3C6C4 /* AppDelegate.swift in Sources */,
