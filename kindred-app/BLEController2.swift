@@ -7,20 +7,17 @@ public class BluetoothService: NSObject {
     var characteristic: CBCharacteristic!
     
     var peripheral: CBPeripheral!
-    //let peripheral_name: String = "name"
     
-    //let service_uuid: CBUUID = CBUUID(string: "uuid")
-    
-    var writeCharacteristic: CBCharacteristic?
-    var readCharacteristic: CBCharacteristic?
+    //var writeCharacteristic: CBCharacteristic?
+    //var readCharacteristic: CBCharacteristic?
     var scanEnabled:Bool = false
 
     // devices
     var deviceList = [Device]()
     
     // peripheral list
+    var writeCharacteristics: [CBPeripheral: CBCharacteristic] = [:]
     var peripherals: [CBPeripheral] = []
-    
     var BLEService_UUID:String = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
     let service_uuid: CBUUID = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
 
@@ -77,7 +74,8 @@ public class BluetoothService: NSObject {
     func acknowledgeNotification(peripheral: CBPeripheral) {
         print("notification acknowledged");
         let response:Data = "done".data(using: .utf8)!
-        peripheral.writeValue(response, for: writeCharacteristic!, type: CBCharacteristicWriteType.withResponse)
+        let writeCharacteristic:CBCharacteristic = writeCharacteristics[peripheral]!
+        peripheral.writeValue(response, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
     }
 }
 
@@ -96,7 +94,7 @@ extension BluetoothService: CBCentralManagerDelegate {
         print("didDiscover peripheral")
         
         let uuid:UUID = peripheral.identifier;
-                
+        
         if(uuid.uuidString == BLEDevice_UUID) {
             print("this should be found")
             debugPrint(deviceList)
@@ -144,13 +142,14 @@ extension BluetoothService: CBPeripheralDelegate {
             // set up notifications if this is the right characteristic
             
             if thisCharacteristic.uuid.uuidString == "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" { // TODO figure out why these are hard coded???
-                readCharacteristic = characteristic // dont know if this is necsesary
+                //readCharacteristic = characteristic // dont know if this is necsesary
                 peripheral.setNotifyValue(true, for: thisCharacteristic)
                 debugPrint("Set to notify: ", thisCharacteristic.uuid)
             }
             
             if thisCharacteristic.uuid.uuidString == "6E400002-B5A3-F393-E0A9-E50E24DCCA9E" {
-                writeCharacteristic = characteristic
+                writeCharacteristics[peripheral] = characteristic
+                //writeCharacteristic = characteristic
             }
             
             // Debug
@@ -177,7 +176,7 @@ extension BluetoothService: CBPeripheralDelegate {
             
             // write message back
             let action = UIAlertAction(title: "acknowledge", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) -> Void in
-                self.topViewController()?.dismiss(animated: true, completion: nil)
+                //self.topViewController()?.dismiss(animated: true, completion: nil)
                 self.acknowledgeNotification(peripheral: peripheral)
             })
             
