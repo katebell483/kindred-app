@@ -18,6 +18,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let cellReuseIdentifier = "cell"
     
+    @IBOutlet weak var kindredLogo: UILabel!
+    @IBOutlet weak var kindredLeaf: UIImageView!
     @IBOutlet weak var addStudentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
@@ -50,6 +52,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         addStudentButton.layer.shadowRadius = 6
         addStudentButton.layer.shadowOffset.width = 1
         addStudentButton.layer.shadowOffset.height = 1
+        
+        kindredLogo.layer.shadowColor = UIColor.gray.cgColor
+        kindredLogo.layer.shadowOpacity = 0.3
+        kindredLogo.layer.shadowRadius = 6
+        kindredLogo.layer.shadowOffset.width = 1
+        kindredLogo.layer.shadowOffset.height = 1
+        
+        kindredLeaf.layer.shadowColor = UIColor.gray.cgColor
+        kindredLeaf.layer.shadowOpacity = 0.3
+        kindredLeaf.layer.shadowRadius = 6
+        kindredLeaf.layer.shadowOffset.width = 1
+        kindredLeaf.layer.shadowOffset.height = 1
     }
 
     override func didReceiveMemoryWarning() {

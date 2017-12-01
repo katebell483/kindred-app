@@ -24,11 +24,14 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MGF-X1-EaE">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MGF-X1-EaE">
                                 <rect key="frame" x="0.0" y="149" width="375" height="518"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="r67-jj-SzO" customClass="StudentCell" customModule="kindred_app2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
@@ -99,12 +102,18 @@
                                     <segue destination="Kdn-7n-KMv" kind="show" id="uHw-Lb-Uz9"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="acacia-4" translatesAutoresizingMaskIntoConstraints="NO" id="OPb-Sk-WJ7">
+                                <rect key="frame" x="64" y="56" width="54" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="addStudentButton" destination="5aw-Zs-Xus" id="5e0-jM-oBc"/>
+                        <outlet property="kindredLeaf" destination="OPb-Sk-WJ7" id="fhA-ZS-x2k"/>
+                        <outlet property="kindredLogo" destination="XEV-FM-GH2" id="CKj-Ig-2Hu"/>
                         <outlet property="tableView" destination="MGF-X1-EaE" id="bD5-rG-Jmh"/>
                     </connections>
                 </viewController>
@@ -459,4 +468,7 @@
             <point key="canvasLocation" x="909.60000000000002" y="605.84707646176912"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="acacia-4" width="213" height="290"/>
+    </resources>
 </document>

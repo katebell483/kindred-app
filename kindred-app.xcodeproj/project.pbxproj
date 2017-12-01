@@ -14,6 +14,9 @@
 		449118B21FBCCCF800DF1A92 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449118B11FBCCCF800DF1A92 /* StudentCell.swift */; };
 		4491D5731FBFB624004FACC4 /* IconCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4491D5721FBFB624004FACC4 /* IconCollectionCell.swift */; };
 		4491D5771FBFC8C6004FACC4 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4491D5761FBFC8C6004FACC4 /* Device.swift */; };
+		44C543C41FD200D2002154CF /* accacia-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C543C31FD200D2002154CF /* accacia-2.png */; };
+		44C543C61FD20415002154CF /* acacia-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C543C51FD20415002154CF /* acacia-2.png */; };
+		44C543C81FD204CE002154CF /* acacia-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C543C71FD204CE002154CF /* acacia-2.png */; };
 		44D1F4CD1FB359B000E3C6C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1F4CC1FB359B000E3C6C4 /* AppDelegate.swift */; };
 		44D1F4CF1FB359B000E3C6C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1F4CE1FB359B000E3C6C4 /* ViewController.swift */; };
 		44D1F4D21FB359B000E3C6C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D1F4D01FB359B000E3C6C4 /* Main.storyboard */; };
@@ -32,6 +35,9 @@
 		449118B11FBCCCF800DF1A92 /* StudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		4491D5721FBFB624004FACC4 /* IconCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionCell.swift; sourceTree = "<group>"; };
 		4491D5761FBFC8C6004FACC4 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		44C543C31FD200D2002154CF /* accacia-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "accacia-2.png"; path = "../../../../pile_nov_1_2017/accacia-2.png"; sourceTree = "<group>"; };
+		44C543C51FD20415002154CF /* acacia-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "acacia-2.png"; path = "../../../../pile_nov_1_2017/acacia-2.png"; sourceTree = "<group>"; };
+		44C543C71FD204CE002154CF /* acacia-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "acacia-2.png"; path = "../../../../pile_nov_1_2017/acacia-2.png"; sourceTree = "<group>"; };
 		44D1F4C91FB359B000E3C6C4 /* kindred-app2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kindred-app2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D1F4CC1FB359B000E3C6C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44D1F4CE1FB359B000E3C6C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,7 +92,10 @@
 				449118B11FBCCCF800DF1A92 /* StudentCell.swift */,
 				4443B17F1FBE53C300B32B68 /* DeviceCollectionCell.swift */,
 				44036EF61FCDD72E00BDE095 /* Realization.aif */,
+				44C543C51FD20415002154CF /* acacia-2.png */,
+				44C543C71FD204CE002154CF /* acacia-2.png */,
 				44D1F4D31FB359B000E3C6C4 /* Assets.xcassets */,
+				44C543C31FD200D2002154CF /* accacia-2.png */,
 				44D1F4D51FB359B000E3C6C4 /* LaunchScreen.storyboard */,
 				44D1F4D81FB359B000E3C6C4 /* Info.plist */,
 			);
@@ -165,7 +174,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C543C41FD200D2002154CF /* accacia-2.png in Resources */,
 				44D1F4D71FB359B000E3C6C4 /* LaunchScreen.storyboard in Resources */,
+				44C543C81FD204CE002154CF /* acacia-2.png in Resources */,
+				44C543C61FD20415002154CF /* acacia-2.png in Resources */,
 				44D1F4D41FB359B000E3C6C4 /* Assets.xcassets in Resources */,
 				44D1F4D21FB359B000E3C6C4 /* Main.storyboard in Resources */,
 			);
