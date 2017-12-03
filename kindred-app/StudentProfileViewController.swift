@@ -355,10 +355,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     private func loadDevices() {
         
-        print("HELLO")
-        
         //Implementing URLSession
-        let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName.trimmingCharacters(in: .whitespaces)
+        let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "%20")
         
         print("URL STRING: " + urlString)
 
@@ -424,8 +422,6 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 print(error!.localizedDescription)
                 // TODO something on error
             }
-            
-            print("SDFDFDF")
             
         }.resume()
         
