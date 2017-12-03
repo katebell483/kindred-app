@@ -355,10 +355,17 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     
     private func loadDevices() {
         
+        print("HELLO")
+        
         //Implementing URLSession
-        let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName
+        let urlString = "https://kindred-web.herokuapp.com/devices/" + self.studentName.trimmingCharacters(in: .whitespaces)
+        
+        print("URL STRING: " + urlString)
+
         //let urlString = "https://127.0.0.1:8000/devices" + self.studentName
         guard let url = URL(string: urlString) else { return }
+        
+        print("URL STRING: " + urlString)
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
