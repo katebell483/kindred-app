@@ -61,6 +61,9 @@ public class BluetoothService: NSObject, UNUserNotificationCenterDelegate {
     }
     
     func updateDevices() {
+        
+        sleep(1)
+        
         let urlString = "https://kindred-web.herokuapp.com/devices"
         guard let url = URL(string: urlString) else { return }
         
@@ -80,6 +83,21 @@ public class BluetoothService: NSObject, UNUserNotificationCenterDelegate {
                 //Get back to the main queue
                 DispatchQueue.main.async {
                     self.deviceList = deviceData
+                    
+                    // clear connections
+                    for peripheral in self.peripherals {
+                        if self.deviceList.contains(where: { $0.device_uuid == peripheral.identifier.uuidString }) {
+                            print(peripheral.identifier.uuidString)
+                            print("peripheral still valid")
+                        } else {
+                            print("found old peripheral - removing")
+                            // remove from peripherals and cancel connection
+                            let index = self.peripherals.index(of:peripheral)
+                            self.peripherals.remove(at: index!)
+                            self.manager.cancelPeripheralConnection(peripheral)
+                        }
+                    }
+                    
                     if(self.scanEnabled) {
                         self.manager?.scanForPeripherals(withServices: [self.service_uuid], options: nil)
                     }
@@ -224,7 +242,7 @@ extension BluetoothService: CBPeripheralDelegate {
         if characteristic.uuid.uuidString == "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" {
             
             // get device info from list
-            let device:Device = deviceList.filter{ $0.device_uuid == peripheral.identifier.uuidString }.first!
+            let device:Device = self.deviceList.filter{ $0.device_uuid == peripheral.identifier.uuidString }.first!
             let studentName:String = device.student_name
             let msg:String = device.device_msg
             

@@ -324,13 +324,12 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
                 addDeviceButton.setTitle("Update Device", for: .normal)
                 //deleteDeviceButton.isHidden = false;
                 addDeviceLabel.text = cell.deviceLabel.text;
-                addDeviceMessage.text = cell.deviceLabel.text;
+                addDeviceMessage.text = cell.deviceMsg.text;
                 addDeviceUUID.text = cell.deviceUUID.text;
                 addDeviceIconLabel.text = cell.deviceIconLabel.text;
                 addDeviceIconButton.setImage(cell.deviceIcon.image, for: .normal);
                 addDeviceIconButton.imageView?.tintColor = UIColor.black
                 addDeviceView.isHidden = false
-
             }
 
         } else {
@@ -397,6 +396,7 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func addDevice() {
+        
         //Implementing URLSession
         let urlString = "https://kindred-web.herokuapp.com/device"
 
@@ -409,6 +409,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             "device_msg": addDeviceMessage.text!,
             "device_icon": addDeviceIconLabel.text!
         ]
+        
+        print(postData)
         
         let jsonData = try? JSONSerialization.data(withJSONObject: postData, options: .prettyPrinted)
         
@@ -425,22 +427,41 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
             
         }.resume()
         
-        let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!,student_name: studentNameLabel.text!)
-        
-        self.deviceList.append(newDevice)
+        if self.deviceList.contains(where: { $0.device_uuid == addDeviceUUID.text! }) {
+            // found
+            
+            var device:Device = self.deviceList.filter{ $0.device_uuid == addDeviceUUID.text! }.first!
+            
+            device.device_icon = addDeviceIconLabel.text!
+            device.device_msg = addDeviceMessage.text!
+            device.device_label = addDeviceLabel.text!
+            
+            let idx = self.deviceList.index(where: { (item) -> Bool in
+                item.device_uuid == addDeviceUUID.text!
+            })
 
-        // update list of devices that BLE is looking for
-        //BLEController().updateDevices() // TODO: verify that this is doing what its supposed to be doing...
-    
+            self.deviceList[idx!] = device
+            
+        } else {
+            // not
+            let newDevice = Device(device_uuid: addDeviceUUID.text!, device_msg: addDeviceMessage.text!, device_label: addDeviceLabel.text!, device_icon: addDeviceIconLabel.text!,student_name: studentNameLabel.text!)
+            
+            self.deviceList.append(newDevice)
+        }
+
         self.deviceCollectionView.reloadData()
         deviceCount.text = String(self.deviceList.count) 
         deviceCountDescriptor.text = "devices connected"
         addDeviceView.isHidden = true
+        
+        // reload ble devices
+        BluetoothService.shared.updateDevices()
+        
     }
 
     func deleteDevice(uuid: String) {
         print("deleting device")
-        let urlString = "https://kindred-web.herokuapp.com/device/" + uuid
+        let urlString = "https://kindred-web.herokuapp.com/device/" + uuid.trimmingCharacters(in: .whitespaces)
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
@@ -462,6 +483,8 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         
         self.deviceCollectionView.reloadData()
         deviceCount.text = String(self.deviceList.count)
+        
+        BluetoothService.shared.updateDevices()
     }
 
     /*

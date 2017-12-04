@@ -9,9 +9,9 @@
 import Foundation
 
 struct Device: Codable {
-    let device_uuid: String
-    let device_msg: String
-    let device_label: String
-    let device_icon: String
-    let student_name: String
+    var device_uuid: String
+    var device_msg: String
+    var device_label: String
+    var device_icon: String
+    var student_name: String
 }

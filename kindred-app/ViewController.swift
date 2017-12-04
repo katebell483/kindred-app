@@ -186,7 +186,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     private func deleteStudent(studentName: String) {
-        let urlString = "https://kindred-web.herokuapp.com/student/" + studentName.lowercased()
+        let urlString = "https://kindred-web.herokuapp.com/student/" + studentName.lowercased().trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "%20")
         //let urlString = "https://127.0.0.1:8000/student/" + studentName
         print(urlString)
         guard let url = URL(string: urlString) else { return }
@@ -209,6 +209,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         self.tableView.reloadData()
+        
+        BluetoothService.shared.updateDevices()
     }
 
 }
