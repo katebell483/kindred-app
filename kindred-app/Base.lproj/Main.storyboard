@@ -304,7 +304,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Device ID" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NP2-m8-yR5">
-                                        <rect key="frame" x="161" y="130" width="189" height="30"/>
+                                        <rect key="frame" x="161" y="130" width="151" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -350,6 +350,14 @@
                                         </state>
                                         <connections>
                                             <action selector="addDeviceCloseButton:" destination="Kdn-7n-KMv" eventType="touchUpInside" id="NbP-cr-JT5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7F-Hm-YZr">
+                                        <rect key="frame" x="320" y="130" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="camera"/>
+                                        <connections>
+                                            <action selector="takePhoto:" destination="Kdn-7n-KMv" eventType="touchUpInside" id="DlN-M0-Yki"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -470,5 +478,6 @@
     </scenes>
     <resources>
         <image name="acacia-4" width="213" height="290"/>
+        <image name="camera" width="32" height="32"/>
     </resources>
 </document>

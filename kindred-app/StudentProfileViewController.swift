@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TesseractOCR
 
 extension UITextField {
     open override func draw(_ rect: CGRect) {
@@ -57,6 +58,11 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var addDeviceIconButton: UIButton!
     @IBOutlet weak var addDeviceIconLabel: UILabel!
     @IBOutlet weak var deleteDeviceButton: UIButton!
+    
+    // take photo button for text detection
+    @IBAction func takePhoto(_ sender: Any) {
+        presentImagePicker();
+    }
     
     // VAR KEEPING STATE OF KEYBOARD ADJUSTMENT
     var viewAdjustedForKeyboard:Bool = false
@@ -403,11 +409,11 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         guard let url = URL(string: urlString) else { return }
         
         let postData: [String: String] = [
-            "student_name": studentNameLabel.text!,
-            "device_uuid": addDeviceUUID.text!,
-            "device_label": addDeviceLabel.text!,
-            "device_msg": addDeviceMessage.text!,
-            "device_icon": addDeviceIconLabel.text!
+            "student_name": studentNameLabel.text!.trimmingCharacters(in: .whitespaces),
+            "device_uuid": addDeviceUUID.text!.trimmingCharacters(in: .whitespaces),
+            "device_label": addDeviceLabel.text!.trimmingCharacters(in: .whitespaces),
+            "device_msg": addDeviceMessage.text!.trimmingCharacters(in: .whitespaces),
+            "device_icon": addDeviceIconLabel.text!.trimmingCharacters(in: .whitespaces)
         ]
         
         print(postData)
@@ -487,14 +493,96 @@ class StudentProfileViewController: UIViewController, UICollectionViewDelegate, 
         BluetoothService.shared.updateDevices()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Tesseract Image Recognition
+    func performImageRecognition(_ image: UIImage) {
+        // 1
+        if let tesseract = G8Tesseract(language: "eng") {
+            // 2
+            tesseract.engineMode = .tesseractCubeCombined
+            // 3
+            tesseract.pageSegmentationMode = .auto
+            // 4
+            tesseract.image = image.g8_blackAndWhite()
+            // 5
+            tesseract.recognize()
+            // 6
+            addDeviceUUID.text = tesseract.recognizedText.trimmingCharacters(in: .whitespaces)
+        }
     }
-    */
 
+}
+
+// 1
+// MARK: - UINavigationControllerDelegate
+extension StudentProfileViewController: UINavigationControllerDelegate {
+}
+
+// MARK: - UIImagePickerControllerDelegate
+extension StudentProfileViewController: UIImagePickerControllerDelegate {
+    func presentImagePicker() {
+        // 2
+        let imagePickerActionSheet = UIAlertController(title: "Snap/Upload Image",
+                                                       message: nil, preferredStyle: .actionSheet)
+        // 3
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraButton = UIAlertAction(title: "Take Photo",
+                                             style: .default) { (alert) -> Void in
+                                                let imagePicker = UIImagePickerController()
+                                                imagePicker.delegate = self
+                                                imagePicker.sourceType = .camera
+                                                self.present(imagePicker, animated: true)
+            }
+            imagePickerActionSheet.addAction(cameraButton)
+        }
+        // 1
+        let libraryButton = UIAlertAction(title: "Choose Existing",
+                                          style: .default) { (alert) -> Void in
+                                            let imagePicker = UIImagePickerController()
+                                            imagePicker.delegate = self
+                                            imagePicker.sourceType = .photoLibrary
+                                            self.present(imagePicker, animated: true)
+        }
+        imagePickerActionSheet.addAction(libraryButton)
+        // 2
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
+        imagePickerActionSheet.addAction(cancelButton)
+        // 3
+        present(imagePickerActionSheet, animated: true)
+    }
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
+        // 2
+        if let selectedPhoto = info[UIImagePickerControllerOriginalImage] as? UIImage,
+            let scaledImage = selectedPhoto.scaleImage(640) {
+            // 3
+            //activityIndicator.startAnimating()
+            // 4
+            dismiss(animated: true, completion: {
+                self.performImageRecognition(scaledImage)
+            })
+        }
+    }
+}
+
+extension UIImage {
+    func scaleImage(_ maxDimension: CGFloat) -> UIImage? {
+        
+        var scaledSize = CGSize(width: maxDimension, height: maxDimension)
+        
+        if size.width > size.height {
+            let scaleFactor = size.height / size.width
+            scaledSize.height = scaledSize.width * scaleFactor
+        } else {
+            let scaleFactor = size.width / size.height
+            scaledSize.width = scaledSize.height * scaleFactor
+        }
+        
+        UIGraphicsBeginImageContext(scaledSize)
+        draw(in: CGRect(origin: .zero, size: scaledSize))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
 }
